@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:infoviz_assign/variables.dart';
+import 'package:infoviz_assign/widgets/info_tooltip.dart';
+import 'package:infoviz_assign/widgets/price_stats_widget.dart';
 import 'package:infoviz_assign/widgets/semantics_radial_bar.dart';
-import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../models/cryptocurrency_model.dart';
@@ -34,6 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // Enables the trackball
       enable: true,
       tooltipSettings: const InteractiveTooltip(enable: true),
+      activationMode: ActivationMode.singleTap,
       builder: (context, trackballDetails) => trackballDetails.point == null
           ? const SizedBox()
           : TrackballPopUpWidget(
@@ -45,6 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _trackballBehaviorTweetCount = TrackballBehavior(
       // Enables the trackball
       enable: true,
+      activationMode: ActivationMode.singleTap,
       tooltipSettings: const InteractiveTooltip(enable: true),
       builder: (context, trackballDetails) => trackballDetails.point == null
           ? const SizedBox()
@@ -57,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _trackballBehaviorSemantics = TrackballBehavior(
       // Enables the trackball
       enable: true,
+      activationMode: ActivationMode.singleTap,
       tooltipSettings: const InteractiveTooltip(enable: true),
       builder: (context, trackballDetails) => trackballDetails.point == null
           ? const SizedBox()
@@ -92,8 +97,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: SingleChildScrollView(
+        //physics: NeverScrollableScrollPhysics(),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 60),
           decoration: const BoxDecoration(
@@ -137,22 +146,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     const SizedBox(height: 40),
-                    const Align(
+                    Align(
                       alignment: Alignment.topLeft,
-                      child: Text(
-                        'Top Cryptocurrency',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
+                      child: Row(
+                        children: const [
+                          Text(
+                            'Top Cryptocurrency',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          SizedBox(width: 8),
+                        ],
                       ),
                     ),
                     const Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Three major cryptocurrecies are selected and projected in line graph in conjunction with the amount of Tweets.',
+                        'Three major cryptocurrecies are selected and projected in line graph in conjunction with the prices, amount of Tweets and Tweets semantics.',
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           color: Colors.white,
@@ -172,17 +186,26 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
+                            // ignore: prefer_const_literals_to_create_immutables
                             children: [
-                              Image.asset('assets/images/btc_logo.png'),
+                              const Icon(
+                                Icons.price_change_outlined,
+                                size: 35,
+                              ),
                               const SizedBox(width: 10),
                               const Text(
                                 'Prices',
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   color: Colors.black,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
-                              )
+                              ),
+                              const SizedBox(width: 8),
+                              const InfoTooltip(
+                                  message:
+                                      'Coin price in USD over time\nUpdated every minute'),
                             ],
                           ),
                           const SizedBox(height: 10),
@@ -208,17 +231,26 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
+                            // ignore: prefer_const_literals_to_create_immutables
                             children: [
-                              Image.asset('assets/images/ethereum_logo.png'),
+                              const Icon(
+                                Icons.format_list_numbered_rounded,
+                                size: 35,
+                              ),
                               const SizedBox(width: 10),
                               const Text(
-                                'Tweet Count',
+                                'Number of tweets mentioning crypto',
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
+                                  fontSize: 20,
                                 ),
-                              )
+                              ),
+                              const SizedBox(width: 8),
+                              const InfoTooltip(
+                                  message:
+                                      "Number of tweets that contain a cryptocurrency name\nUpdated every minute"),
                             ],
                           ),
                           const SizedBox(height: 10),
@@ -244,8 +276,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
+                            // ignore: prefer_const_literals_to_create_immutables
                             children: [
-                              Image.asset('assets/images/solana_logo.png'),
+                              const Icon(
+                                Icons.speaker_notes_outlined,
+                                size: 35,
+                              ),
                               const SizedBox(width: 10),
                               const Text(
                                 'Semantics',
@@ -253,8 +289,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                   fontFamily: 'Poppins',
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
+                                  fontSize: 20,
                                 ),
-                              )
+                              ),
+                              const SizedBox(width: 8),
+                              const InfoTooltip(
+                                  message:
+                                      "Average tweets positivity or negativivity of tweets mentioning crypto a cryptocurrency name, where\n 1: super positive\n 0: neutral\n-1: super negative"),
                             ],
                           ),
                           const SizedBox(height: 10),
@@ -319,6 +360,68 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
+                    const SizedBox(height: 30),
+                    const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Pricing Statistics',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Below depicts three major pricing statistics',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          color: Colors.white,
+                          fontWeight: FontWeight.w300,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        PriceStatsWidget(
+                          width: width,
+                          cryptoModel: latestSemantics[0],
+                          imagePath: 'assets/images/btc_logo.png',
+                          cryptoName: ConstVariables.cryptoNames[0],
+                        ),
+                        PriceStatsWidget(
+                          width: width,
+                          cryptoModel: latestSemantics[1],
+                          imagePath: 'assets/images/ethereum_logo.png',
+                          cryptoName: ConstVariables.cryptoNames[1],
+                        ),
+                        PriceStatsWidget(
+                          width: width,
+                          cryptoModel: latestSemantics[2],
+                          imagePath: 'assets/images/solana_logo.png',
+                          cryptoName: ConstVariables.cryptoNames[2],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 80),
+                    const Align(
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        'Powered by CoinGecko API and Twitter API',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 12,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
                   ],
                 ),
         ),
@@ -326,3 +429,33 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
+// class HoverableWidget extends StatefulWidget {
+//   const HoverableWidget({
+//     Key? key,
+//     required this.text,
+//   }) : super(key: key);
+
+//   final String text;
+
+//   @override
+//   State<HoverableWidget> createState() => _HoverableWidgetState();
+// }
+
+// class _HoverableWidgetState extends State<HoverableWidget> {
+//   bool isHovered = false;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MouseRegion(
+//       onEnter: (event) => print('enter'),
+//       onExit: (event) => print('exit'),
+//       child: SvgPicture.asset(
+//         'assets/images/info_icon.svg',
+//         width: 20,
+//         height: 20,
+//       ),
+//     );
+//   }
+// }

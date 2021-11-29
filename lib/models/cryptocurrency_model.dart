@@ -25,6 +25,7 @@ class CryptocurrencyModel {
     required this.price,
     required this.priceChangePercentage24H,
     required this.highPrice24H,
+    required this.lowPrice24H,
     required this.marketDominancePercentage,
     required this.keywordTweetNumber,
     required this.datetime,
@@ -40,6 +41,7 @@ class CryptocurrencyModel {
   final double price;
   final double priceChangePercentage24H;
   final double highPrice24H;
+  final double lowPrice24H;
   final double marketDominancePercentage;
   final int keywordTweetNumber;
   final DateTime datetime;
@@ -56,6 +58,7 @@ class CryptocurrencyModel {
       price: map["price"],
       priceChangePercentage24H: map["price_change_percentage_24h"],
       highPrice24H: map["high_price_24h"],
+      lowPrice24H: map["low_price_24h"],
       marketDominancePercentage: map["market_dominance_percentage"],
       keywordTweetNumber: map["keyword_tweet_number"],
       datetime: DateTime.parse(map["datetime"]),

@@ -10,5 +10,7 @@ class ConstVariables {
 
   ConstVariables._internal();
 
+  static final cryptoNames = ['Bitcoin', 'Ethereum', 'Solana'];
+  // order : btc, eth, sol
   static final cryptosColors = [Colors.red, Colors.blue, Colors.orange];
 }

@@ -22,6 +22,7 @@ class SemanticsRadialBar extends StatefulWidget {
 class _SemanticsRadialBarState extends State<SemanticsRadialBar> {
   late String semanticsTypeString;
   late Color textColor;
+  late TooltipBehavior _tooltipBehavior;
 
   @override
   void initState() {
@@ -39,6 +40,34 @@ class _SemanticsRadialBarState extends State<SemanticsRadialBar> {
         semanticsTypeString = 'Neutral';
         break;
     }
+
+    _tooltipBehavior = TooltipBehavior(
+      duration: 0,
+      enable: true,
+      format: 'point.x: point.y%',
+      tooltipPosition: TooltipPosition.pointer,
+      // Data here is CryptocurrencyModel
+      // builder: (data, point, series, pointIndex, seriesIndex) {
+      //   late String text;
+      //   switch (widget.semanticsType) {
+      //     case SemanticsType.positive:
+      //       text = data.percentageOfPositiveTweets.toString();
+      //       break;
+      //     case SemanticsType.negative:
+      //       text = data.percentageOfNegativeTweets.toString();
+      //       break;
+      //     case SemanticsType.neutral:
+      //       text = data.percentageOfNeutralTweets.toString();
+      //       break;
+      //   }
+      //   return Container(
+      //     padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+      //     color: Colors.black87,
+      //     child: Text(text),
+      //   );
+      // },
+    );
+
     super.initState();
   }
 
@@ -82,14 +111,15 @@ class _SemanticsRadialBarState extends State<SemanticsRadialBar> {
         ),
         const SizedBox(height: 8),
         SfCircularChart(
+          tooltipBehavior: _tooltipBehavior,
           series: <CircularSeries>[
             RadialBarSeries<CryptocurrencyModel, String>(
               dataSource: widget.latestSemantics,
               enableTooltip: true,
-              sortFieldValueMapper: (data, index) => data.price.toString(),
               cornerStyle: CornerStyle.bothCurve,
-              xValueMapper: (CryptocurrencyModel data, _) =>
-                  data.price.toString(), // not important
+              maximumValue: 1,
+              xValueMapper: (CryptocurrencyModel data, i) =>
+                  ConstVariables.cryptoNames[i],
               yValueMapper: (CryptocurrencyModel data, _) {
                 switch (widget.semanticsType) {
                   case SemanticsType.positive:
