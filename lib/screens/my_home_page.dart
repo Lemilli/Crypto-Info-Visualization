@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:infoviz_assign/variables.dart';
 import 'package:infoviz_assign/widgets/info_tooltip.dart';
 import 'package:infoviz_assign/widgets/price_stats_widget.dart';
 import 'package:infoviz_assign/widgets/semantics_radial_bar.dart';
+import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../models/cryptocurrency_model.dart';
@@ -206,6 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               const InfoTooltip(
                                   message:
                                       'Coin price in USD over time\nUpdated every minute'),
+                              const SizedBox(width: 10),
                             ],
                           ),
                           const SizedBox(height: 10),
@@ -239,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                               const SizedBox(width: 10),
                               const Text(
-                                'Number of tweets mentioning crypto',
+                                'Tweet Count',
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   color: Colors.black,

@@ -30,6 +30,8 @@ class PriceStatsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pricePercent = (cryptoModel.price - cryptoModel.lowPrice24H) /
+        (cryptoModel.highPrice24H - cryptoModel.lowPrice24H);
     return Container(
       width: width * 0.25,
       decoration: BoxDecoration(
@@ -119,34 +121,16 @@ class PriceStatsWidget extends StatelessWidget {
           LinearPercentIndicator(
             lineHeight: 20,
             animation: false,
-            // center: Row(
-            //   children: [
-            //     Text(
-            //       r'$' + formatter.format(cryptoModel.lowPrice24H.toInt()),
-            //       style: const TextStyle(
-            //         color: Colors.black87,
-            //         fontFamily: 'Poppins',
-            //         fontSize: 12,
-            //       ),
-            //     ),
-            //     const Spacer(),
-            //     Text(
-            //       r'$' + formatter.format(cryptoModel.highPrice24H.toInt()),
-            //       style: const TextStyle(
-            //         color: Colors.black87,
-            //         fontFamily: 'Poppins',
-            //         fontSize: 12,
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            // leading: Text(r'$' + cryptoModel.lowPrice24H.toInt().toString()),
-            // trailing: Text(r'$' + cryptoModel.highPrice24H.toInt().toString()),
-            percent: (cryptoModel.price - cryptoModel.lowPrice24H) /
-                (cryptoModel.highPrice24H - cryptoModel.lowPrice24H),
-            progressColor: _colorFromPercent(
-                (cryptoModel.price - cryptoModel.lowPrice24H) /
-                    (cryptoModel.highPrice24H - cryptoModel.lowPrice24H)),
+            center: Text(
+              r"$" + formatter.format(cryptoModel.price),
+              style: const TextStyle(
+                color: Colors.black87,
+                fontFamily: 'Poppins',
+                fontSize: 12,
+              ),
+            ),
+            percent: pricePercent > 1.0 ? 1.0 : pricePercent,
+            progressColor: _colorFromPercent(pricePercent),
             backgroundColor: const Color(0xFFDFDFDF),
           ),
           const SizedBox(height: 8),

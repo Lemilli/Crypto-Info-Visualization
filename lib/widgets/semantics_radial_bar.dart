@@ -114,20 +114,21 @@ class _SemanticsRadialBarState extends State<SemanticsRadialBar> {
           tooltipBehavior: _tooltipBehavior,
           series: <CircularSeries>[
             RadialBarSeries<CryptocurrencyModel, String>(
+              gap: '5%',
               dataSource: widget.latestSemantics,
               enableTooltip: true,
               cornerStyle: CornerStyle.bothCurve,
-              maximumValue: 1,
+              maximumValue: 100,
               xValueMapper: (CryptocurrencyModel data, i) =>
                   ConstVariables.cryptoNames[i],
               yValueMapper: (CryptocurrencyModel data, _) {
                 switch (widget.semanticsType) {
                   case SemanticsType.positive:
-                    return data.percentageOfPositiveTweets;
+                    return data.percentageOfPositiveTweets * 100;
                   case SemanticsType.negative:
-                    return data.percentageOfNegativeTweets;
+                    return data.percentageOfNegativeTweets * 100;
                   case SemanticsType.neutral:
-                    return data.percentageOfNeutralTweets;
+                    return data.percentageOfNeutralTweets * 100;
                 }
               },
               pointColorMapper: (data, i) => ConstVariables.cryptosColors[i],
