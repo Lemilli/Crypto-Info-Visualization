@@ -2,8 +2,6 @@
 //
 //     final cryptocurrencyModel = cryptocurrencyModelFromJson(jsonString);
 
-import 'dart:convert';
-
 List<CryptocurrencyModel> cryptocurrencyModelsFromJson(List<dynamic> str) {
   //final List<dynamic> decodedJson = json.decode(str);
   List<CryptocurrencyModel> results = List.empty(growable: true);

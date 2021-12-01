@@ -3,8 +3,7 @@ import 'package:infoviz_assign/variables.dart';
 import 'package:infoviz_assign/widgets/info_tooltip.dart';
 import 'package:infoviz_assign/widgets/price_stats_widget.dart';
 import 'package:infoviz_assign/widgets/semantics_radial_bar.dart';
-import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../models/cryptocurrency_model.dart';
@@ -28,6 +27,9 @@ class _MyHomePageState extends State<MyHomePage> {
   late final List<CryptocurrencyModel> bitcoins, ethereums, solanas;
   List<CryptocurrencyModel> latestSemantics = List.empty(growable: true);
   bool isLoading = true;
+  bool isFoldPrices = false;
+  bool isFoldTweetCount = false;
+  bool isFoldSemantics = false;
 
   @override
   void initState() {
@@ -179,7 +181,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     const SizedBox(height: 14),
                     Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFFFDF8),
+                        color: isFoldPrices
+                            ? const Color(0xFFD6D6D6)
+                            : const Color(0xFFFFFDF8),
                         borderRadius: BorderRadius.circular(18),
                       ),
                       padding: const EdgeInsets.fromLTRB(28, 14, 28, 14),
@@ -208,24 +212,40 @@ class _MyHomePageState extends State<MyHomePage> {
                                   message:
                                       'Coin price in USD over time\nUpdated every minute'),
                               const SizedBox(width: 10),
+                              const Spacer(),
+                              InkWell(
+                                onTap: () => setState(() {
+                                  isFoldPrices = !isFoldPrices;
+                                }),
+                                child: isFoldPrices
+                                    ? const Icon(Icons.arrow_drop_up_outlined)
+                                    : const Icon(
+                                        Icons.arrow_drop_down_outlined),
+                              )
                             ],
                           ),
-                          const SizedBox(height: 10),
-                          CustomCartesianChart(
-                            trackballBehavior: _trackballBehaviorPrice,
-                            zoomPanBehavior: _zoomPanBehavior,
-                            bitcoins: bitcoins,
-                            ethereums: ethereums,
-                            solanas: solanas,
-                            type: CartesianGraphType.price,
-                          ),
+                          isFoldPrices
+                              ? const SizedBox()
+                              : const SizedBox(height: 10),
+                          isFoldPrices
+                              ? const SizedBox()
+                              : CustomCartesianChart(
+                                  trackballBehavior: _trackballBehaviorPrice,
+                                  zoomPanBehavior: _zoomPanBehavior,
+                                  bitcoins: bitcoins,
+                                  ethereums: ethereums,
+                                  solanas: solanas,
+                                  type: CartesianGraphType.price,
+                                ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 30),
                     Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFFFDF8),
+                        color: isFoldTweetCount
+                            ? const Color(0xFFD6D6D6)
+                            : const Color(0xFFFFFDF8),
                         borderRadius: BorderRadius.circular(18),
                       ),
                       padding: const EdgeInsets.fromLTRB(28, 14, 28, 14),
@@ -253,24 +273,41 @@ class _MyHomePageState extends State<MyHomePage> {
                               const InfoTooltip(
                                   message:
                                       "Number of tweets that contain a cryptocurrency name\nUpdated every minute"),
+                              const Spacer(),
+                              InkWell(
+                                onTap: () => setState(() {
+                                  isFoldTweetCount = !isFoldTweetCount;
+                                }),
+                                child: isFoldTweetCount
+                                    ? const Icon(Icons.arrow_drop_up_outlined)
+                                    : const Icon(
+                                        Icons.arrow_drop_down_outlined),
+                              )
                             ],
                           ),
-                          const SizedBox(height: 10),
-                          CustomCartesianChart(
-                            trackballBehavior: _trackballBehaviorTweetCount,
-                            zoomPanBehavior: _zoomPanBehavior,
-                            bitcoins: bitcoins,
-                            ethereums: ethereums,
-                            solanas: solanas,
-                            type: CartesianGraphType.tweetCount,
-                          ),
+                          isFoldTweetCount
+                              ? const SizedBox()
+                              : const SizedBox(height: 10),
+                          isFoldTweetCount
+                              ? const SizedBox()
+                              : CustomCartesianChart(
+                                  trackballBehavior:
+                                      _trackballBehaviorTweetCount,
+                                  zoomPanBehavior: _zoomPanBehavior,
+                                  bitcoins: bitcoins,
+                                  ethereums: ethereums,
+                                  solanas: solanas,
+                                  type: CartesianGraphType.tweetCount,
+                                ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 30),
                     Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFFFDF8),
+                        color: isFoldSemantics
+                            ? const Color(0xFFD6D6D6)
+                            : const Color(0xFFFFFDF8),
                         borderRadius: BorderRadius.circular(18),
                       ),
                       padding: const EdgeInsets.fromLTRB(28, 14, 28, 14),
@@ -298,37 +335,63 @@ class _MyHomePageState extends State<MyHomePage> {
                               const InfoTooltip(
                                   message:
                                       "Average tweets positivity or negativivity of tweets mentioning crypto a cryptocurrency name, where\n 1: super positive\n 0: neutral\n-1: super negative"),
+                              const Spacer(),
+                              InkWell(
+                                onTap: () => setState(() {
+                                  isFoldSemantics = !isFoldSemantics;
+                                }),
+                                child: isFoldSemantics
+                                    ? const Icon(Icons.arrow_drop_up_outlined)
+                                    : const Icon(
+                                        Icons.arrow_drop_down_outlined),
+                              )
                             ],
                           ),
-                          const SizedBox(height: 10),
-                          CustomCartesianChart(
-                            trackballBehavior: _trackballBehaviorSemantics,
-                            zoomPanBehavior: _zoomPanBehavior,
-                            bitcoins: bitcoins,
-                            ethereums: ethereums,
-                            solanas: solanas,
-                            type: CartesianGraphType.semantics,
-                          ),
+                          isFoldSemantics
+                              ? const SizedBox()
+                              : const SizedBox(height: 10),
+                          isFoldSemantics
+                              ? const SizedBox()
+                              : CustomCartesianChart(
+                                  trackballBehavior:
+                                      _trackballBehaviorSemantics,
+                                  zoomPanBehavior: _zoomPanBehavior,
+                                  bitcoins: bitcoins,
+                                  ethereums: ethereums,
+                                  solanas: solanas,
+                                  type: CartesianGraphType.semantics,
+                                ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 25),
-                    const Align(
+                    Align(
                       alignment: Alignment.topLeft,
-                      child: Text(
-                        'Semantics',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
+                      child: Row(
+                        children: [
+                          const Text(
+                            'Semantics',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          InfoTooltip(
+                            message: 'Last updated at: ' +
+                                DateFormat('dd-MM-yyyy - HH:mm:ss')
+                                    .format(latestSemantics.first.datetime),
+                            makeWhite: true,
+                          ),
+                        ],
                       ),
                     ),
                     const Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Below determines the percentage of positive, negative, and neutral tweets for each cryptocurrency.',
+                        'Below determines the percentage of positive, negative, and neutral tweets for each cryptocurrency per minute.',
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           color: Colors.white,
@@ -363,16 +426,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    const Align(
+                    Align(
                       alignment: Alignment.topLeft,
-                      child: Text(
-                        'Pricing Statistics',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
+                      child: Row(
+                        children: [
+                          const Text(
+                            'Pricing Statistics',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          InfoTooltip(
+                            message: 'Last updated at: ' +
+                                DateFormat('dd-MM-yyyy - HH:mm:ss')
+                                    .format(latestSemantics.first.datetime),
+                            makeWhite: true,
+                          ),
+                        ],
                       ),
                     ),
                     const Align(
@@ -394,19 +468,19 @@ class _MyHomePageState extends State<MyHomePage> {
                         PriceStatsWidget(
                           width: width,
                           cryptoModel: latestSemantics[0],
-                          imagePath: 'assets/images/btc_logo.png',
+                          imagePath: ConstVariables.cryptoImages[0],
                           cryptoName: ConstVariables.cryptoNames[0],
                         ),
                         PriceStatsWidget(
                           width: width,
                           cryptoModel: latestSemantics[1],
-                          imagePath: 'assets/images/ethereum_logo.png',
+                          imagePath: ConstVariables.cryptoImages[1],
                           cryptoName: ConstVariables.cryptoNames[1],
                         ),
                         PriceStatsWidget(
                           width: width,
                           cryptoModel: latestSemantics[2],
-                          imagePath: 'assets/images/solana_logo.png',
+                          imagePath: ConstVariables.cryptoImages[2],
                           cryptoName: ConstVariables.cryptoNames[2],
                         ),
                       ],
@@ -431,33 +505,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-
-// class HoverableWidget extends StatefulWidget {
-//   const HoverableWidget({
-//     Key? key,
-//     required this.text,
-//   }) : super(key: key);
-
-//   final String text;
-
-//   @override
-//   State<HoverableWidget> createState() => _HoverableWidgetState();
-// }
-
-// class _HoverableWidgetState extends State<HoverableWidget> {
-//   bool isHovered = false;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MouseRegion(
-//       onEnter: (event) => print('enter'),
-//       onExit: (event) => print('exit'),
-//       child: SvgPicture.asset(
-//         'assets/images/info_icon.svg',
-//         width: 20,
-//         height: 20,
-//       ),
-//     );
-//   }
-// }

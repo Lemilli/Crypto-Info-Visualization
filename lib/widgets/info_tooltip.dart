@@ -6,11 +6,13 @@ class InfoTooltip extends StatelessWidget {
     this.message,
     this.richMessage,
     this.preferBelow,
+    this.makeWhite,
   }) : super(key: key);
 
   final String? message;
   final InlineSpan? richMessage;
   final bool? preferBelow;
+  final bool? makeWhite;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +27,10 @@ class InfoTooltip extends StatelessWidget {
           Radius.circular(4),
         ),
       ),
-      child: const Icon(
+      child: Icon(
         Icons.info,
         size: 20,
+        color: makeWhite == null ? null : Colors.white,
       ),
     );
   }

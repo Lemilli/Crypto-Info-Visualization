@@ -13,4 +13,9 @@ class ConstVariables {
   static final cryptoNames = ['Bitcoin', 'Ethereum', 'Solana'];
   // order : btc, eth, sol
   static final cryptosColors = [Colors.orange, Colors.grey, Colors.blue];
+  static final cryptoImages = [
+    'assets/images/btc.png',
+    'assets/images/eth.png',
+    'assets/images/sol.png',
+  ];
 }
