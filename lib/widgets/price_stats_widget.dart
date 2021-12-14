@@ -55,6 +55,8 @@ class PriceStatsWidget extends StatelessWidget {
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 20,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'Poppins',
                 ),
               ),
             ],
@@ -66,6 +68,7 @@ class PriceStatsWidget extends StatelessWidget {
                 'Price Change in 24 hours',
                 style: TextStyle(
                   fontWeight: FontWeight.w300,
+                  fontFamily: 'Poppins',
                   fontSize: 14,
                 ),
               ),
@@ -141,6 +144,7 @@ class PriceStatsWidget extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.w300,
                   fontSize: 14,
+                  fontFamily: 'Poppins',
                 ),
               ),
               Spacer(),

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:infoviz_assign/variables.dart';
 import 'package:infoviz_assign/widgets/info_tooltip.dart';
 import 'package:infoviz_assign/widgets/price_stats_widget.dart';
+import 'package:infoviz_assign/widgets/prices_cartesian_chart.dart';
+import 'package:infoviz_assign/widgets/semantics_cartesian_chart.dart';
 import 'package:infoviz_assign/widgets/semantics_radial_bar.dart';
+import 'package:infoviz_assign/widgets/tweet_count_cartesian.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -27,7 +30,6 @@ class _MyHomePageState extends State<MyHomePage> {
   late final List<CryptocurrencyModel> bitcoins, ethereums, solanas;
   List<CryptocurrencyModel> latestSemantics = List.empty(growable: true);
   bool isLoading = true;
-  bool isFoldPrices = false;
   bool isFoldTweetCount = false;
   bool isFoldSemantics = false;
 
@@ -179,191 +181,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     const SizedBox(height: 14),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: isFoldPrices
-                            ? const Color(0xFFD6D6D6)
-                            : const Color(0xFFFFFDF8),
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      padding: const EdgeInsets.fromLTRB(28, 14, 28, 14),
-                      child: Column(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            // ignore: prefer_const_literals_to_create_immutables
-                            children: [
-                              const Icon(
-                                Icons.price_change_outlined,
-                                size: 35,
-                              ),
-                              const SizedBox(width: 10),
-                              const Text(
-                                'Prices',
-                                style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              const InfoTooltip(
-                                  message:
-                                      'Coin price in USD over time\nUpdated every minute'),
-                              const SizedBox(width: 10),
-                              const Spacer(),
-                              InkWell(
-                                onTap: () => setState(() {
-                                  isFoldPrices = !isFoldPrices;
-                                }),
-                                child: isFoldPrices
-                                    ? const Icon(Icons.arrow_drop_up_outlined)
-                                    : const Icon(
-                                        Icons.arrow_drop_down_outlined),
-                              )
-                            ],
-                          ),
-                          isFoldPrices
-                              ? const SizedBox()
-                              : const SizedBox(height: 10),
-                          isFoldPrices
-                              ? const SizedBox()
-                              : CustomCartesianChart(
-                                  trackballBehavior: _trackballBehaviorPrice,
-                                  zoomPanBehavior: _zoomPanBehavior,
-                                  bitcoins: bitcoins,
-                                  ethereums: ethereums,
-                                  solanas: solanas,
-                                  type: CartesianGraphType.price,
-                                ),
-                        ],
-                      ),
-                    ),
+                    PricesCartesianChart(
+                        trackballBehaviorPrice: _trackballBehaviorPrice,
+                        zoomPanBehavior: _zoomPanBehavior,
+                        bitcoins: bitcoins,
+                        ethereums: ethereums,
+                        solanas: solanas),
                     const SizedBox(height: 30),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: isFoldTweetCount
-                            ? const Color(0xFFD6D6D6)
-                            : const Color(0xFFFFFDF8),
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      padding: const EdgeInsets.fromLTRB(28, 14, 28, 14),
-                      child: Column(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            // ignore: prefer_const_literals_to_create_immutables
-                            children: [
-                              const Icon(
-                                Icons.format_list_numbered_rounded,
-                                size: 35,
-                              ),
-                              const SizedBox(width: 10),
-                              const Text(
-                                'Tweet Count',
-                                style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              const InfoTooltip(
-                                  message:
-                                      "Number of tweets that contain a cryptocurrency name\nUpdated every minute"),
-                              const Spacer(),
-                              InkWell(
-                                onTap: () => setState(() {
-                                  isFoldTweetCount = !isFoldTweetCount;
-                                }),
-                                child: isFoldTweetCount
-                                    ? const Icon(Icons.arrow_drop_up_outlined)
-                                    : const Icon(
-                                        Icons.arrow_drop_down_outlined),
-                              )
-                            ],
-                          ),
-                          isFoldTweetCount
-                              ? const SizedBox()
-                              : const SizedBox(height: 10),
-                          isFoldTweetCount
-                              ? const SizedBox()
-                              : CustomCartesianChart(
-                                  trackballBehavior:
-                                      _trackballBehaviorTweetCount,
-                                  zoomPanBehavior: _zoomPanBehavior,
-                                  bitcoins: bitcoins,
-                                  ethereums: ethereums,
-                                  solanas: solanas,
-                                  type: CartesianGraphType.tweetCount,
-                                ),
-                        ],
-                      ),
-                    ),
+                    TweetCountCartesian(
+                        trackballBehaviorTweetCount:
+                            _trackballBehaviorTweetCount,
+                        zoomPanBehavior: _zoomPanBehavior,
+                        bitcoins: bitcoins,
+                        ethereums: ethereums,
+                        solanas: solanas),
                     const SizedBox(height: 30),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: isFoldSemantics
-                            ? const Color(0xFFD6D6D6)
-                            : const Color(0xFFFFFDF8),
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      padding: const EdgeInsets.fromLTRB(28, 14, 28, 14),
-                      child: Column(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            // ignore: prefer_const_literals_to_create_immutables
-                            children: [
-                              const Icon(
-                                Icons.speaker_notes_outlined,
-                                size: 35,
-                              ),
-                              const SizedBox(width: 10),
-                              const Text(
-                                'Semantics',
-                                style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              const InfoTooltip(
-                                  message:
-                                      "Average tweets positivity or negativivity of tweets mentioning crypto a cryptocurrency name, where\n 1: super positive\n 0: neutral\n-1: super negative"),
-                              const Spacer(),
-                              InkWell(
-                                onTap: () => setState(() {
-                                  isFoldSemantics = !isFoldSemantics;
-                                }),
-                                child: isFoldSemantics
-                                    ? const Icon(Icons.arrow_drop_up_outlined)
-                                    : const Icon(
-                                        Icons.arrow_drop_down_outlined),
-                              )
-                            ],
-                          ),
-                          isFoldSemantics
-                              ? const SizedBox()
-                              : const SizedBox(height: 10),
-                          isFoldSemantics
-                              ? const SizedBox()
-                              : CustomCartesianChart(
-                                  trackballBehavior:
-                                      _trackballBehaviorSemantics,
-                                  zoomPanBehavior: _zoomPanBehavior,
-                                  bitcoins: bitcoins,
-                                  ethereums: ethereums,
-                                  solanas: solanas,
-                                  type: CartesianGraphType.semantics,
-                                ),
-                        ],
-                      ),
-                    ),
+                    SemanticsCartesianChart(
+                        trackballBehaviorSemantics: _trackballBehaviorSemantics,
+                        zoomPanBehavior: _zoomPanBehavior,
+                        bitcoins: bitcoins,
+                        ethereums: ethereums,
+                        solanas: solanas),
                     const SizedBox(height: 25),
                     Align(
                       alignment: Alignment.topLeft,

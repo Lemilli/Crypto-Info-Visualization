@@ -22,7 +22,7 @@ class TrackballPopUpWidget extends StatefulWidget {
 class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
   late String displayedText;
   late String cryptoName;
-  late Color color;
+  Color? color;
 
   @override
   void initState() {
@@ -38,24 +38,34 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
         break;
     }
 
-    switch (widget.trackballDetails.seriesIndex) {
-      case 0:
-        cryptoName = 'Bitcoin';
-        color = ConstVariables.cryptosColors[0];
-        break;
-      case 1:
-        cryptoName = 'Ethereum';
-        color = ConstVariables.cryptosColors[1];
-        break;
-      case 2:
-        cryptoName = 'Solana';
-        color = ConstVariables.cryptosColors[2];
-        break;
-      default:
-        cryptoName = 'Bitcoin';
-        color = ConstVariables.cryptosColors[0];
-        break;
+    color = widget.trackballDetails.series?.color;
+
+    if (widget.trackballDetails.series?.color == Colors.orange) {
+      cryptoName = 'Bitcoin';
+    } else if (widget.trackballDetails.series?.color == Colors.grey) {
+      cryptoName = 'Ethereum';
+    } else if (widget.trackballDetails.series?.color == Colors.blue) {
+      cryptoName = 'Solana';
     }
+
+    // switch (widget.trackballDetails.seriesIndex) {
+    //   case 0:
+    //     cryptoName = 'Bitcoin';
+    //     color = ConstVariables.cryptosColors[0];
+    //     break;
+    //   case 1:
+    //     cryptoName = 'Ethereum';
+    //     color = ConstVariables.cryptosColors[1];
+    //     break;
+    //   case 2:
+    //     cryptoName = 'Solana';
+    //     color = ConstVariables.cryptosColors[2];
+    //     break;
+    //   default:
+    //     cryptoName = 'Bitcoin';
+    //     color = ConstVariables.cryptosColors[0];
+    //     break;
+    // }
     super.initState();
   }
 
@@ -64,7 +74,7 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
     return Container(
       height: 60,
       width: 150,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
       decoration: const BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.all(Radius.circular(6.0)),
@@ -79,7 +89,7 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
                 margin: const EdgeInsets.only(right: 5),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: color,
+                  color: color ?? Colors.black,
                 ),
               ),
               Text(
@@ -88,6 +98,7 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
                   color: Colors.white,
                   fontSize: 10,
                   fontFamily: 'Poppins',
+                  fontWeight: FontWeight.normal,
                 ),
               )
             ],
@@ -100,6 +111,7 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
                   color: Colors.grey,
                   fontSize: 10,
                   fontFamily: 'Poppins',
+                  fontWeight: FontWeight.normal,
                 ),
               ),
               Text(
@@ -107,6 +119,7 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
                     .format(widget.trackballDetails.point!.x),
                 style: const TextStyle(
                   fontSize: 10,
+                  fontWeight: FontWeight.normal,
                   fontFamily: 'Poppins',
                   color: Colors.white,
                 ),
@@ -118,8 +131,9 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
               Text(
                 displayedText,
                 style: const TextStyle(
-                  color: Colors.grey,
+                  color: Color.fromRGBO(158, 158, 158, 1),
                   fontSize: 10,
+                  fontWeight: FontWeight.normal,
                   fontFamily: 'Poppins',
                 ),
               ),
@@ -131,6 +145,7 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
                   color: Colors.white,
                   fontSize: 10,
                   fontFamily: 'Poppins',
+                  fontWeight: FontWeight.normal,
                 ),
               ),
             ],

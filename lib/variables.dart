@@ -14,8 +14,8 @@ class ConstVariables {
   // order : btc, eth, sol
   static final cryptosColors = [Colors.orange, Colors.grey, Colors.blue];
   static final cryptoImages = [
-    'assets/images/btc.png',
-    'assets/images/eth.png',
-    'assets/images/sol.png',
+    'images/btc.png',
+    'images/eth.png',
+    'images/sol.png',
   ];
 }
