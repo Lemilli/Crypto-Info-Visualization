@@ -15,9 +15,10 @@ class APIHanlder {
     dio.options.receiveTimeout = 10000;
 
     try {
-      final url = kIsWeb
-          ? 'http://127.0.0.1:8000/' + coinShortName
-          : 'http://10.0.2.2:8000/' + coinShortName;
+      // final url = kIsWeb
+      //     ? 'http://127.0.0.1:8000/' + coinShortName
+      //     : 'http://10.0.2.2:8000/' + coinShortName;  // android emulator localohst
+      final url = 'http://3.250.213.87/' + coinShortName;
 
       final response = await dio.get(
         url,
