@@ -37,73 +37,15 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
-    _trackballBehaviorPrice = TrackballBehavior(
-      // Enables the trackball
-      enable: true,
-      tooltipSettings: const InteractiveTooltip(enable: true),
-      activationMode: ActivationMode.singleTap,
-      builder: (context, trackballDetails) => trackballDetails.point == null
-          ? const SizedBox()
-          : TrackballPopUpWidget(
-              trackballDetails: trackballDetails,
-              type: CartesianGraphType.price,
-            ),
-    );
-
-    _trackballBehaviorTweetCount = TrackballBehavior(
-      // Enables the trackball
-      enable: true,
-      activationMode: ActivationMode.singleTap,
-      tooltipSettings: const InteractiveTooltip(enable: true),
-      builder: (context, trackballDetails) => trackballDetails.point == null
-          ? const SizedBox()
-          : TrackballPopUpWidget(
-              trackballDetails: trackballDetails,
-              type: CartesianGraphType.tweetCount,
-            ),
-    );
-
-    _trackballBehaviorSemantics = TrackballBehavior(
-      // Enables the trackball
-      enable: true,
-      activationMode: ActivationMode.singleTap,
-      tooltipSettings: const InteractiveTooltip(enable: true),
-      builder: (context, trackballDetails) => trackballDetails.point == null
-          ? const SizedBox()
-          : TrackballPopUpWidget(
-              trackballDetails: trackballDetails,
-              type: CartesianGraphType.semantics,
-            ),
-    );
-
-    _zoomPanBehavior = ZoomPanBehavior(
-      enablePinching: true,
-      enablePanning: true,
-      zoomMode: ZoomMode.xy,
-    );
-
+    _setupInteractivity();
+    // get data from backend
     _assignCryptoData();
-  }
-
-  void _assignCryptoData() async {
-    // Network stuff
-    bitcoins = await apiHanlder.getCryptoData('btc');
-    ethereums = await apiHanlder.getCryptoData('eth');
-    solanas = await apiHanlder.getCryptoData('sol');
-
-    latestSemantics.add(bitcoins.last);
-    latestSemantics.add(ethereums.last);
-    latestSemantics.add(solanas.last);
-
-    setState(() {
-      isLoading = false;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
+    //final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -111,10 +53,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 60),
           decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/bg.png"),
-              fit: BoxFit.cover,
-            ),
+            // image: DecorationImage(
+            //   image: AssetImage("assets/images/bg.png"),
+            //   fit: BoxFit.cover,
+            // ),
+            color: Color(0xFF000D19),
           ),
           child: isLoading
               ? const SizedBox(
@@ -140,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 30),
                       child: Text(
-                        'Twitter has been the most influential social media platform regarding the world of cryptocurrency. Millions of tweets are posted on every hour, including the developers, constitutions, influencers and retail investors. With the abundance of available tweets, we ouoght to find out whether Twitter has a role in cryptocurrency’s pricing movement in real time.',
+                        "Twitter's the most influential social media in the cryptocurrency world. Thousands of tweets are posted every day by people interested in cryptocurrency. This tool will help you analyze those tweets and make better predictions based on people's mood towards specific coins.",
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           color: Color(0xffcacaca),
@@ -341,5 +284,67 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+
+  void _setupInteractivity() {
+    _trackballBehaviorPrice = TrackballBehavior(
+      // Enables the trackball
+      enable: true,
+      tooltipSettings: const InteractiveTooltip(enable: true),
+      activationMode: ActivationMode.singleTap,
+      builder: (context, trackballDetails) => trackballDetails.point == null
+          ? const SizedBox()
+          : TrackballPopUpWidget(
+              trackballDetails: trackballDetails,
+              type: CartesianGraphType.price,
+            ),
+    );
+
+    _trackballBehaviorTweetCount = TrackballBehavior(
+      // Enables the trackball
+      enable: true,
+      activationMode: ActivationMode.singleTap,
+      tooltipSettings: const InteractiveTooltip(enable: true),
+      builder: (context, trackballDetails) => trackballDetails.point == null
+          ? const SizedBox()
+          : TrackballPopUpWidget(
+              trackballDetails: trackballDetails,
+              type: CartesianGraphType.tweetCount,
+            ),
+    );
+
+    _trackballBehaviorSemantics = TrackballBehavior(
+      // Enables the trackball
+      enable: true,
+      activationMode: ActivationMode.singleTap,
+      tooltipSettings: const InteractiveTooltip(enable: true),
+      builder: (context, trackballDetails) => trackballDetails.point == null
+          ? const SizedBox()
+          : TrackballPopUpWidget(
+              trackballDetails: trackballDetails,
+              type: CartesianGraphType.semantics,
+            ),
+    );
+
+    _zoomPanBehavior = ZoomPanBehavior(
+      enablePinching: true,
+      enablePanning: true,
+      zoomMode: ZoomMode.xy,
+    );
+  }
+
+  void _assignCryptoData() async {
+    // Network stuff
+    bitcoins = await apiHanlder.getCryptoData('btc');
+    ethereums = await apiHanlder.getCryptoData('eth');
+    solanas = await apiHanlder.getCryptoData('sol');
+
+    latestSemantics.add(bitcoins.last);
+    latestSemantics.add(ethereums.last);
+    latestSemantics.add(solanas.last);
+
+    setState(() {
+      isLoading = false;
+    });
   }
 }

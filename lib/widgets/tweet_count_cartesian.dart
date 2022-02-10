@@ -70,7 +70,7 @@ class _TweetCountCartesianState extends State<TweetCountCartesian> {
               const SizedBox(width: 8),
               const InfoTooltip(
                   message:
-                      "Number of tweets that contain a cryptocurrency name\nUpdated every minute"),
+                      "Number of tweets that contain a cryptocurrency name\nUpdated every 15 minutes"),
               const SizedBox(width: 10),
               ChoiceChip(
                 backgroundColor: Colors.transparent,

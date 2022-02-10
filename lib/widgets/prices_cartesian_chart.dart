@@ -49,7 +49,6 @@ class _PricesCartesianChartState extends State<PricesCartesianChart> {
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            // ignore: prefer_const_literals_to_create_immutables
             children: [
               const Icon(
                 Icons.price_change_outlined,
@@ -67,7 +66,8 @@ class _PricesCartesianChartState extends State<PricesCartesianChart> {
               ),
               const SizedBox(width: 8),
               const InfoTooltip(
-                  message: 'Coin price in USD over time\nUpdated every minute'),
+                  message:
+                      'Coin price in USD over time\nUpdated every 15 minutes'),
               const SizedBox(width: 10),
               ChoiceChip(
                 backgroundColor: Colors.transparent,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:infoviz_assign/variables.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -40,32 +39,14 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
 
     color = widget.trackballDetails.series?.color;
 
-    if (widget.trackballDetails.series?.color == Colors.orange) {
+    if (color == Colors.orange) {
       cryptoName = 'Bitcoin';
-    } else if (widget.trackballDetails.series?.color == Colors.grey) {
+    } else if (color == Colors.grey) {
       cryptoName = 'Ethereum';
-    } else if (widget.trackballDetails.series?.color == Colors.blue) {
+    } else if (color == Colors.blue) {
       cryptoName = 'Solana';
     }
 
-    // switch (widget.trackballDetails.seriesIndex) {
-    //   case 0:
-    //     cryptoName = 'Bitcoin';
-    //     color = ConstVariables.cryptosColors[0];
-    //     break;
-    //   case 1:
-    //     cryptoName = 'Ethereum';
-    //     color = ConstVariables.cryptosColors[1];
-    //     break;
-    //   case 2:
-    //     cryptoName = 'Solana';
-    //     color = ConstVariables.cryptosColors[2];
-    //     break;
-    //   default:
-    //     cryptoName = 'Bitcoin';
-    //     color = ConstVariables.cryptosColors[0];
-    //     break;
-    // }
     super.initState();
   }
 
@@ -73,7 +54,7 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
   Widget build(BuildContext context) {
     return Container(
       height: 60,
-      width: 150,
+      width: 156,
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
       decoration: const BoxDecoration(
         color: Colors.black,

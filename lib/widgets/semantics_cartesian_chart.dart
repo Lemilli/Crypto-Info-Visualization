@@ -70,7 +70,7 @@ class _SemanticsCartesianChartState extends State<SemanticsCartesianChart> {
               const SizedBox(width: 8),
               const InfoTooltip(
                   message:
-                      "Average tweets positivity or negativivity of tweets mentioning crypto a cryptocurrency name, where\n 1: super positive\n 0: neutral\n-1: super negative"),
+                      "Average positivity or negativivity of tweets mentioning a cryptocurrency name, where\n 1: super positive\n 0: neutral\n-1: super negative"),
               const SizedBox(width: 10),
               ChoiceChip(
                 selectedColor: Colors.black54,
