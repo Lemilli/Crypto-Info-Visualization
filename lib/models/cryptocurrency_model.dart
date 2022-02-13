@@ -3,7 +3,6 @@
 //     final cryptocurrencyModel = cryptocurrencyModelFromJson(jsonString);
 
 List<CryptocurrencyModel> cryptocurrencyModelsFromJson(List<dynamic> str) {
-  //final List<dynamic> decodedJson = json.decode(str);
   List<CryptocurrencyModel> results = List.empty(growable: true);
   for (Map<String, dynamic> element in str) {
     results.add(CryptocurrencyModel.fromJson(element));
@@ -54,12 +53,13 @@ class CryptocurrencyModel {
   factory CryptocurrencyModel.fromJson(Map<String, dynamic> map) {
     return CryptocurrencyModel(
       price: map["price"],
-      priceChangePercentage24H: map["price_change_percentage_24h"],
+      priceChangePercentage24H:
+          (map["price_change_percentage_24h"] as double).clamp(0.0, 1.0),
       highPrice24H: map["high_price_24h"],
       lowPrice24H: map["low_price_24h"],
       marketDominancePercentage: map["market_dominance_percentage"],
       keywordTweetNumber: map["keyword_tweet_number"],
-      datetime: DateTime.parse(map["datetime"]),
+      datetime: DateTime.parse(map["datetime"]).toLocal(),
       semanticsAll: double.parse(map["semantics_all"].toStringAsFixed(2)),
       semanticsPositiveTweets: map["semantics_positive_tweets"],
       semanticsNegativeTweets: map["semantics_negative_tweets"],
@@ -72,17 +72,4 @@ class CryptocurrencyModel {
           double.parse(map["percentage_of_neutral_tweets"].toStringAsFixed(2)),
     );
   }
-
-  // Map<String, dynamic> toJson() => {
-  //       "price": price,
-  //       "price_change_percentage_24h": priceChangePercentage24H,
-  //       "high_price_24h": highPrice24H,
-  //       "market_dominance_percentage": marketDominancePercentage,
-  //       "keyword_tweet_number": keywordTweetNumber,
-  //       "datetime": datetime.toIso8601String(),
-  //       "semantics_all": semanticsAll,
-  //       "semantics_positive_tweets": semanticsPositiveTweets,
-  //       "semantics_negative_tweets": semanticsNegativeTweets,
-  //       "circulating_supply": circulatingSupply,
-  //     };
 }

@@ -1,6 +1,8 @@
 class CryptoChartData {
-  CryptoChartData(this.time, this.yValue);
+  CryptoChartData(DateTime time, this.yValue) {
+    this.time = time.toLocal();
+  }
 
-  final DateTime time;
+  late final DateTime time;
   final double yValue;
 }

@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 
 import '../models/cryptocurrency_model.dart';
 
 class APIHanlder {
   var dio = Dio();
 
+  //btc, eth, sol
   Future<List<CryptocurrencyModel>> getCryptoData(String coinShortName) async {
     dio.options.responseType = ResponseType.json;
     dio.options.headers = {

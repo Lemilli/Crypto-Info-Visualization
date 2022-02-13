@@ -30,8 +30,9 @@ class PriceStatsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pricePercent = (cryptoModel.price - cryptoModel.lowPrice24H) /
-        (cryptoModel.highPrice24H - cryptoModel.lowPrice24H);
+    final pricePercent = ((cryptoModel.price - cryptoModel.lowPrice24H) /
+            (cryptoModel.highPrice24H - cryptoModel.lowPrice24H))
+        .clamp(0.0, 1.0);
     return Container(
       width: width * 0.25,
       decoration: BoxDecoration(
@@ -132,7 +133,7 @@ class PriceStatsWidget extends StatelessWidget {
                 fontSize: 12,
               ),
             ),
-            percent: pricePercent > 1.0 ? 1.0 : pricePercent,
+            percent: pricePercent,
             progressColor: _colorFromPercent(pricePercent),
             backgroundColor: const Color(0xFFDFDFDF),
           ),
