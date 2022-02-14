@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infoviz_assign/screens/home_page/bloc/crypto_data_bloc.dart';
+import 'package:infoviz_assign/screens/home_page/bloc/cubit/scroll_cubit.dart';
 import 'package:infoviz_assign/variables.dart';
 import 'package:infoviz_assign/global_widgets/info_tooltip.dart';
 import 'package:infoviz_assign/widgets/price_stats_widget.dart';
@@ -26,8 +27,8 @@ class _HomePageState extends State<HomePage> {
       _trackballBehaviorTweetCount,
       _trackballBehaviorSemantics;
   late ZoomPanBehavior _zoomPanBehavior;
-
-  final CryptoDataBloc _cryptoBloc = CryptoDataBloc();
+  final _cryptoBloc = CryptoDataBloc();
+  final _scrollCubit = ScrollCubit();
 
   @override
   void initState() {
@@ -44,52 +45,62 @@ class _HomePageState extends State<HomePage> {
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 60),
-          decoration: const BoxDecoration(
-            color: Color(0xFF000D19),
-          ),
-          child: BlocProvider(
-            create: (context) => _cryptoBloc,
-            child: BlocBuilder<CryptoDataBloc, CryptoDataState>(
-              builder: (context, state) {
-                if (state is CryptoDataLoading || state is CryptoDataInitial) {
-                  return SizedBox(
-                    height: height,
-                    child: const Center(child: CircularProgressIndicator()),
-                  );
-                } else if (state is CryptoDataLoaded) {
-                  return _buildLoaded(
-                    context,
-                    state.bitcoins,
-                    state.ethereums,
-                    state.solanas,
-                    state.latestSemantics,
-                    width,
-                  );
-                } else if (state is CryptoDataError) {
-                  return SizedBox(
-                    height: height,
-                    child: const Center(
-                      child: Text(
-                        "Error. Try again later.",
-                        style: TextStyle(color: Colors.white),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => _cryptoBloc),
+          BlocProvider(create: (context) => _scrollCubit),
+        ],
+        child: BlocListener<ScrollCubit, ScrollState>(
+          listener: (context, state) => setState(() {
+            print("set state");
+          }),
+          child: SingleChildScrollView(
+            physics: _scrollCubit.state.scrollPhysics,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 60),
+              decoration: const BoxDecoration(
+                color: Color(0xFF000D19),
+              ),
+              child: BlocBuilder<CryptoDataBloc, CryptoDataState>(
+                builder: (context, state) {
+                  if (state is CryptoDataLoading ||
+                      state is CryptoDataInitial) {
+                    return SizedBox(
+                      height: height,
+                      child: const Center(child: CircularProgressIndicator()),
+                    );
+                  } else if (state is CryptoDataLoaded) {
+                    return _buildLoaded(
+                      context,
+                      state.bitcoins,
+                      state.ethereums,
+                      state.solanas,
+                      state.latestSemantics,
+                      width,
+                    );
+                  } else if (state is CryptoDataError) {
+                    return SizedBox(
+                      height: height,
+                      child: const Center(
+                        child: Text(
+                          "Error. Try again later.",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
-                    ),
-                  );
-                } else {
-                  return SizedBox(
-                    height: height,
-                    child: const Center(
-                      child: Text(
-                        "No corresponding BLOC state",
-                        style: TextStyle(color: Colors.white),
+                    );
+                  } else {
+                    return SizedBox(
+                      height: height,
+                      child: const Center(
+                        child: Text(
+                          "No corresponding BLOC state",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
-                    ),
-                  );
-                }
-              },
+                    );
+                  }
+                },
+              ),
             ),
           ),
         ),
@@ -193,6 +204,7 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(
                 fontFamily: 'Poppins',
                 color: Colors.white,
+                height: 1.2,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
@@ -367,7 +379,8 @@ class _HomePageState extends State<HomePage> {
     _zoomPanBehavior = ZoomPanBehavior(
       enablePinching: true,
       enablePanning: true,
-      zoomMode: ZoomMode.xy,
+      enableMouseWheelZooming: true,
+      zoomMode: ZoomMode.x,
     );
   }
 }
