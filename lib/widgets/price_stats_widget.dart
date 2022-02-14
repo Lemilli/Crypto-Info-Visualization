@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:infoviz_assign/models/cryptocurrency_model.dart';
 import 'package:infoviz_assign/global_widgets/info_tooltip.dart';
+import 'package:infoviz_assign/variables.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -17,7 +18,6 @@ class PriceStatsWidget extends StatelessWidget {
   final CryptocurrencyModel cryptoModel;
   final String imagePath;
   final String cryptoName;
-  final formatter = NumberFormat.decimalPattern();
 
   Color _colorFromPercent(percent) {
     if (percent < 0.33) {
@@ -83,7 +83,8 @@ class PriceStatsWidget extends StatelessWidget {
                       style: TextStyle(color: Colors.white54),
                     ),
                     TextSpan(
-                      text: formatter.format(cryptoModel.lowPrice24H),
+                      text: ConstVariables.formatDecimalPattern(
+                          cryptoModel.lowPrice24H),
                       style: const TextStyle(),
                     ),
                     const TextSpan(
@@ -96,7 +97,8 @@ class PriceStatsWidget extends StatelessWidget {
                       style: TextStyle(color: Colors.white54),
                     ),
                     TextSpan(
-                      text: formatter.format(cryptoModel.price),
+                      text: ConstVariables.formatDecimalPattern(
+                          cryptoModel.price),
                       style: const TextStyle(),
                     ),
                     const TextSpan(
@@ -109,7 +111,8 @@ class PriceStatsWidget extends StatelessWidget {
                       style: TextStyle(color: Colors.white54),
                     ),
                     TextSpan(
-                      text: formatter.format(cryptoModel.highPrice24H),
+                      text: ConstVariables.formatDecimalPattern(
+                          cryptoModel.highPrice24H),
                       style: const TextStyle(),
                     ),
                     const TextSpan(
@@ -126,7 +129,7 @@ class PriceStatsWidget extends StatelessWidget {
             lineHeight: 20,
             animation: false,
             center: Text(
-              r"$" + formatter.format(cryptoModel.price),
+              r"$" + ConstVariables.formatDecimalPattern(cryptoModel.price),
               style: const TextStyle(
                 color: Colors.black87,
                 fontFamily: 'Poppins',

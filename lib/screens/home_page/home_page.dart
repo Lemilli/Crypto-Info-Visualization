@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:infoviz_assign/global_widgets/top_navigation_button.dart';
+import 'package:infoviz_assign/screens/about_page/about_page.dart';
 import 'package:infoviz_assign/screens/home_page/bloc/crypto_data_bloc.dart';
 import 'package:infoviz_assign/screens/home_page/bloc/cubit/scroll_cubit.dart';
 import 'package:infoviz_assign/variables.dart';
@@ -50,10 +52,10 @@ class _HomePageState extends State<HomePage> {
           BlocProvider(create: (context) => _cryptoBloc),
           BlocProvider(create: (context) => _scrollCubit),
         ],
+        // Disable scroll of the page whenever user is hovering over a zoomable chart/graph
+        // So that user can scroll the chart to zoom in
         child: BlocListener<ScrollCubit, ScrollState>(
-          listener: (context, state) => setState(() {
-            print("set state");
-          }),
+          listener: (context, state) => setState(() {}),
           child: SingleChildScrollView(
             physics: _scrollCubit.state.scrollPhysics,
             child: Container(
@@ -117,16 +119,40 @@ class _HomePageState extends State<HomePage> {
     double width,
   ) {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      const Padding(
-        padding: EdgeInsets.only(top: 50),
-        child: Text(
-          'The Impact of Twitter on Cryptocurrency Pricing Movement',
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            fontSize: 20,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+      const SizedBox(height: 30),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          TopNavigationButton(
+            text: 'Home',
+            onPressed: (() => Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomePage(),
+                  ),
+                )),
           ),
+          const Spacer(),
+          TopNavigationButton(
+            text: 'About',
+            onPressed: (() => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AboutPage(),
+                  ),
+                )),
+          ),
+        ],
+      ),
+      const SizedBox(height: 20),
+      const Text(
+        'The Impact of Twitter on Cryptocurrency Pricing Movement',
+        style: TextStyle(
+          fontFamily: 'Poppins',
+          fontSize: 20,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
         ),
       ),
       const SizedBox(height: 5),
@@ -224,7 +250,7 @@ class _HomePageState extends State<HomePage> {
       const Align(
         alignment: Alignment.topLeft,
         child: Text(
-          'Below determines the percentage of positive, negative, and neutral tweets for each cryptocurrency per minute.',
+          'The percentage of positive, negative, and neutral tweets for each cryptocurrency every 15 minutes.',
           style: TextStyle(
             fontFamily: 'Poppins',
             color: Colors.white,
@@ -287,7 +313,7 @@ class _HomePageState extends State<HomePage> {
       const Align(
         alignment: Alignment.topLeft,
         child: Text(
-          'Below depicts three major pricing statistics',
+          'Cryptocurrency-related statistics',
           style: TextStyle(
             fontFamily: 'Poppins',
             color: Colors.white,

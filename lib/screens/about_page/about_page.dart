@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:infoviz_assign/global_widgets/info_tooltip.dart';
+import 'package:infoviz_assign/global_widgets/top_navigation_button.dart';
+import 'package:infoviz_assign/screens/home_page/home_page.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key? key}) : super(key: key);
@@ -10,7 +12,7 @@ class AboutPage extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.fromLTRB(60, 50, 60, 0),
+        padding: const EdgeInsets.fromLTRB(60, 30, 60, 0),
         height: height,
         width: double.infinity,
         decoration: const BoxDecoration(
@@ -19,6 +21,16 @@ class AboutPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            TopNavigationButton(
+              text: 'Home',
+              onPressed: (() => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomePage(),
+                    ),
+                  )),
+            ),
+            const SizedBox(height: 20),
             const Align(
               alignment: Alignment.center,
               child: Text(
@@ -89,42 +101,42 @@ class AboutPage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            const Text(
-              'Get in touch',
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-            Row(
-              children: const [
-                Icon(
-                  Icons.email_outlined,
-                  color: Colors.white,
-                  size: 20,
-                ),
-                SizedBox(width: 8),
-                Text(
-                  'Email: ',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    color: Colors.white,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 14,
-                  ),
-                ),
-                SelectableText(
-                  'test@gmail.com',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
-                )
-              ],
-            ),
+            // const Text(
+            //   'Get in touch',
+            //   style: TextStyle(
+            //     fontFamily: 'Poppins',
+            //     color: Colors.white,
+            //     fontWeight: FontWeight.bold,
+            //     fontSize: 20,
+            //   ),
+            // ),
+            // Row(
+            //   children: const [
+            //     Icon(
+            //       Icons.email_outlined,
+            //       color: Colors.white,
+            //       size: 20,
+            //     ),
+            //     SizedBox(width: 8),
+            //     Text(
+            //       'Email: ',
+            //       style: TextStyle(
+            //         fontFamily: 'Poppins',
+            //         color: Colors.white,
+            //         fontWeight: FontWeight.w300,
+            //         fontSize: 14,
+            //       ),
+            //     ),
+            //     SelectableText(
+            //       'test@gmail.com',
+            //       style: TextStyle(
+            //         fontFamily: 'Poppins',
+            //         color: Colors.white,
+            //         fontSize: 14,
+            //       ),
+            //     )
+            //   ],
+            // ),
           ],
         ),
       ),

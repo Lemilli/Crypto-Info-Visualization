@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:infoviz_assign/variables.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -120,8 +121,11 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
               ),
               Text(
                 widget.type == CartesianGraphType.price
-                    ? '${widget.trackballDetails.point!.y}\$'
-                    : '${widget.trackballDetails.point!.y}',
+                    ? ConstVariables.formatDecimalPattern(
+                            widget.trackballDetails.point!.y) +
+                        r'$'
+                    : ConstVariables.formatDecimalPattern(
+                        widget.trackballDetails.point!.y),
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 10,
