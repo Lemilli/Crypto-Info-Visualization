@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infoviz_assign/screens/home_page/bloc/crypto_data_bloc.dart';
 import 'package:infoviz_assign/variables.dart';
-import 'package:infoviz_assign/widgets/info_tooltip.dart';
+import 'package:infoviz_assign/global_widgets/info_tooltip.dart';
 import 'package:infoviz_assign/widgets/price_stats_widget.dart';
 import 'package:infoviz_assign/widgets/prices_cartesian_chart.dart';
 import 'package:infoviz_assign/widgets/semantics_cartesian_chart.dart';
@@ -11,7 +11,6 @@ import 'package:infoviz_assign/widgets/tweet_count_cartesian.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../models/cryptocurrency_model.dart';
-import '../../network/api_handler.dart';
 import '../../widgets/custom_cartesian_chart.dart';
 import '../../widgets/trackball_pop_up.dart';
 
@@ -27,9 +26,6 @@ class _HomePageState extends State<HomePage> {
       _trackballBehaviorTweetCount,
       _trackballBehaviorSemantics;
   late ZoomPanBehavior _zoomPanBehavior;
-  late final apiHanlder = APIHanlder();
-  bool isFoldTweetCount = false;
-  bool isFoldSemantics = false;
 
   final CryptoDataBloc _cryptoBloc = CryptoDataBloc();
 
@@ -86,7 +82,10 @@ class _HomePageState extends State<HomePage> {
                   return SizedBox(
                     height: height,
                     child: const Center(
-                      child: Text("No corresponding BLOC state"),
+                      child: Text(
+                        "No corresponding BLOC state",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   );
                 }

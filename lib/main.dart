@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:infoviz_assign/screens/about_page/about_page.dart';
 import 'package:infoviz_assign/screens/home_page/home_page.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: const AboutPage(),
     );
   }
 }

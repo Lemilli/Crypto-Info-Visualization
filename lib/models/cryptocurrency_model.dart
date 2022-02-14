@@ -54,7 +54,7 @@ class CryptocurrencyModel {
     return CryptocurrencyModel(
       price: map["price"],
       priceChangePercentage24H:
-          (map["price_change_percentage_24h"] as double).clamp(0.0, 1.0),
+          map["price_change_percentage_24h"],
       highPrice24H: map["high_price_24h"],
       lowPrice24H: map["low_price_24h"],
       marketDominancePercentage: map["market_dominance_percentage"],
