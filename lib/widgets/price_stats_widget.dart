@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:infoviz_assign/models/cryptocurrency_model.dart';
 import 'package:infoviz_assign/global_widgets/info_tooltip.dart';
-import 'package:infoviz_assign/variables.dart';
+import 'package:infoviz_assign/global_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infoviz_assign/models/cryptocurrency_model.dart';
 import 'package:infoviz_assign/screens/home_page/bloc/cubit/scroll_cubit.dart';
-import 'package:infoviz_assign/variables.dart';
+import 'package:infoviz_assign/global_helper.dart';
 import 'package:infoviz_assign/widgets/custom_cartesian_chart.dart';
 import 'package:infoviz_assign/global_widgets/info_tooltip.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';

@@ -4,7 +4,7 @@ import 'package:infoviz_assign/global_widgets/top_navigation_button.dart';
 import 'package:infoviz_assign/screens/about_page/about_page.dart';
 import 'package:infoviz_assign/screens/home_page/bloc/crypto_data_bloc.dart';
 import 'package:infoviz_assign/screens/home_page/bloc/cubit/scroll_cubit.dart';
-import 'package:infoviz_assign/variables.dart';
+import 'package:infoviz_assign/global_helper.dart';
 import 'package:infoviz_assign/global_widgets/info_tooltip.dart';
 import 'package:infoviz_assign/widgets/price_stats_widget.dart';
 import 'package:infoviz_assign/widgets/prices_cartesian_chart.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infoviz_assign/models/cryptocurrency_model.dart';
-import 'package:infoviz_assign/variables.dart';
+import 'package:infoviz_assign/global_helper.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 enum SemanticsType { positive, negative, neutral }

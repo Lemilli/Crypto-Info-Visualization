@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:infoviz_assign/variables.dart';
+import 'package:infoviz_assign/global_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
