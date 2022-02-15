@@ -57,7 +57,7 @@ class _CustomCartesianChartState extends State<CustomCartesianChart> {
               return data.semanticsAll;
           }
         },
-        color: ConstVariables.cryptosColors[0],
+        color: GlobalHelper.cryptosColors[0],
       ));
     }
 
@@ -75,7 +75,7 @@ class _CustomCartesianChartState extends State<CustomCartesianChart> {
               return data.semanticsAll;
           }
         },
-        color: ConstVariables.cryptosColors[1],
+        color: GlobalHelper.cryptosColors[1],
       ));
     }
 
@@ -93,7 +93,7 @@ class _CustomCartesianChartState extends State<CustomCartesianChart> {
               return data.semanticsAll;
           }
         },
-        color: ConstVariables.cryptosColors[2],
+        color: GlobalHelper.cryptosColors[2],
       ));
     }
 

@@ -45,8 +45,8 @@ class PriceStatsWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Image.asset(
-                imagePath,
+              Image(
+                image: AssetImage(imagePath),
                 width: 26,
                 height: 26,
               ),
@@ -83,7 +83,7 @@ class PriceStatsWidget extends StatelessWidget {
                       style: TextStyle(color: Colors.white54),
                     ),
                     TextSpan(
-                      text: ConstVariables.formatDecimalPattern(
+                      text: GlobalHelper.formatDecimalPattern(
                           cryptoModel.lowPrice24H),
                       style: const TextStyle(),
                     ),
@@ -97,8 +97,8 @@ class PriceStatsWidget extends StatelessWidget {
                       style: TextStyle(color: Colors.white54),
                     ),
                     TextSpan(
-                      text: ConstVariables.formatDecimalPattern(
-                          cryptoModel.price),
+                      text:
+                          GlobalHelper.formatDecimalPattern(cryptoModel.price),
                       style: const TextStyle(),
                     ),
                     const TextSpan(
@@ -111,7 +111,7 @@ class PriceStatsWidget extends StatelessWidget {
                       style: TextStyle(color: Colors.white54),
                     ),
                     TextSpan(
-                      text: ConstVariables.formatDecimalPattern(
+                      text: GlobalHelper.formatDecimalPattern(
                           cryptoModel.highPrice24H),
                       style: const TextStyle(),
                     ),
@@ -129,7 +129,7 @@ class PriceStatsWidget extends StatelessWidget {
             lineHeight: 20,
             animation: false,
             center: Text(
-              r"$" + ConstVariables.formatDecimalPattern(cryptoModel.price),
+              r"$" + GlobalHelper.formatDecimalPattern(cryptoModel.price),
               style: const TextStyle(
                 color: Colors.black87,
                 fontFamily: 'Poppins',

@@ -23,11 +23,13 @@ class AboutPage extends StatelessWidget {
           children: [
             TopNavigationButton(
               text: 'Home',
-              onPressed: (() => Navigator.push(
+              // Removes all the routes in the stack and pushes a new page
+              onPressed: (() => Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const HomePage(),
                     ),
+                    (route) => false,
                   )),
             ),
             const SizedBox(height: 20),

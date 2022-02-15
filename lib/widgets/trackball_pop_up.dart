@@ -121,10 +121,10 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
               ),
               Text(
                 widget.type == CartesianGraphType.price
-                    ? ConstVariables.formatDecimalPattern(
+                    ? GlobalHelper.formatDecimalPattern(
                             widget.trackballDetails.point!.y) +
                         r'$'
-                    : ConstVariables.formatDecimalPattern(
+                    : GlobalHelper.formatDecimalPattern(
                         widget.trackballDetails.point!.y),
                 style: const TextStyle(
                   color: Colors.white,

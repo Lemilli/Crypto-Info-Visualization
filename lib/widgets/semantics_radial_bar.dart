@@ -36,14 +36,14 @@ class _SemanticsRadialBarState extends State<SemanticsRadialBar> {
                 widget.latestSemantics[1].percentageOfPositiveTweets) &&
             widget.latestSemantics[0].percentageOfPositiveTweets >=
                 widget.latestSemantics[2].percentageOfPositiveTweets) {
-          imagePath = ConstVariables.cryptoImages[0];
+          imagePath = GlobalHelper.cryptoImages[0];
         } else if ((widget.latestSemantics[1].percentageOfPositiveTweets >
                 widget.latestSemantics[0].percentageOfPositiveTweets) &&
             widget.latestSemantics[1].percentageOfPositiveTweets >=
                 widget.latestSemantics[2].percentageOfPositiveTweets) {
-          imagePath = ConstVariables.cryptoImages[1];
+          imagePath = GlobalHelper.cryptoImages[1];
         } else {
-          imagePath = ConstVariables.cryptoImages[2];
+          imagePath = GlobalHelper.cryptoImages[2];
         }
         break;
       case SemanticsType.negative:
@@ -54,14 +54,14 @@ class _SemanticsRadialBarState extends State<SemanticsRadialBar> {
                 widget.latestSemantics[1].percentageOfNegativeTweets) &&
             widget.latestSemantics[0].percentageOfNegativeTweets >=
                 widget.latestSemantics[2].percentageOfNegativeTweets) {
-          imagePath = ConstVariables.cryptoImages[0];
+          imagePath = GlobalHelper.cryptoImages[0];
         } else if ((widget.latestSemantics[1].percentageOfNegativeTweets >
                 widget.latestSemantics[0].percentageOfNegativeTweets) &&
             widget.latestSemantics[1].percentageOfNegativeTweets >=
                 widget.latestSemantics[2].percentageOfNegativeTweets) {
-          imagePath = ConstVariables.cryptoImages[1];
+          imagePath = GlobalHelper.cryptoImages[1];
         } else {
-          imagePath = ConstVariables.cryptoImages[2];
+          imagePath = GlobalHelper.cryptoImages[2];
         }
 
         break;
@@ -73,14 +73,14 @@ class _SemanticsRadialBarState extends State<SemanticsRadialBar> {
                 widget.latestSemantics[1].percentageOfNeutralTweets) &&
             widget.latestSemantics[0].percentageOfNeutralTweets >=
                 widget.latestSemantics[2].percentageOfNeutralTweets) {
-          imagePath = ConstVariables.cryptoImages[0];
+          imagePath = GlobalHelper.cryptoImages[0];
         } else if ((widget.latestSemantics[1].percentageOfNeutralTweets >
                 widget.latestSemantics[0].percentageOfNeutralTweets) &&
             widget.latestSemantics[1].percentageOfNeutralTweets >=
                 widget.latestSemantics[2].percentageOfNeutralTweets) {
-          imagePath = ConstVariables.cryptoImages[1];
+          imagePath = GlobalHelper.cryptoImages[1];
         } else {
-          imagePath = ConstVariables.cryptoImages[2];
+          imagePath = GlobalHelper.cryptoImages[2];
         }
 
         break;
@@ -148,7 +148,7 @@ class _SemanticsRadialBarState extends State<SemanticsRadialBar> {
                   cornerStyle: CornerStyle.bothCurve,
                   maximumValue: 100,
                   xValueMapper: (CryptocurrencyModel data, i) =>
-                      ConstVariables.cryptoNames[i],
+                      GlobalHelper.cryptoNames[i],
                   yValueMapper: (CryptocurrencyModel data, _) {
                     switch (widget.semanticsType) {
                       case SemanticsType.positive:
@@ -159,13 +159,12 @@ class _SemanticsRadialBarState extends State<SemanticsRadialBar> {
                         return data.percentageOfNeutralTweets * 100;
                     }
                   },
-                  pointColorMapper: (data, i) =>
-                      ConstVariables.cryptosColors[i],
+                  pointColorMapper: (data, i) => GlobalHelper.cryptosColors[i],
                 ),
               ],
             ),
-            Image.asset(
-              imagePath,
+            Image(
+              image: AssetImage(imagePath),
               width: 50,
               height: 50,
             ),

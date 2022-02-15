@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class ConstVariables {
-  // Singleton just in case
-  static final ConstVariables _instance = ConstVariables._internal();
+class GlobalHelper {
+  // Singleton
+  static final GlobalHelper _instance = GlobalHelper._internal();
 
-  factory ConstVariables() {
+  factory GlobalHelper() {
     return _instance;
   }
 
-  ConstVariables._internal();
+  GlobalHelper._internal();
 
   static final cryptoNames = ['Bitcoin', 'Ethereum', 'Solana'];
   // order : btc, eth, sol
   static final cryptosColors = [Colors.orange, Colors.grey, Colors.blue];
   static final cryptoImages = [
-    'images/btc.png',
-    'images/eth.png',
-    'images/sol.png',
+    'assets/images/btc.png',
+    'assets/images/eth.png',
+    'assets/images/sol.png',
   ];
 
   static final _formatter = NumberFormat.decimalPattern();

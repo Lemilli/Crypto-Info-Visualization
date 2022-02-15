@@ -32,8 +32,8 @@ class PricesCartesianChart extends StatefulWidget {
 class _PricesCartesianChartState extends State<PricesCartesianChart> {
   bool isFoldPrices = false;
   bool isVisibleBTCPrice = true;
-  bool isVisibleETHPrice = true;
-  bool isVisibleSOLPrice = true;
+  bool isVisibleETHPrice = false;
+  bool isVisibleSOLPrice = false;
 
   void refresh() {
     setState(() {});
@@ -75,7 +75,7 @@ class _PricesCartesianChartState extends State<PricesCartesianChart> {
                 backgroundColor: Colors.transparent,
                 selectedColor: Colors.black54,
                 label: Text(
-                  ConstVariables.cryptoNames[0],
+                  GlobalHelper.cryptoNames[0],
                   style: TextStyle(
                     color: isVisibleBTCPrice ? Colors.white : Colors.black,
                   ),
@@ -91,7 +91,7 @@ class _PricesCartesianChartState extends State<PricesCartesianChart> {
                 backgroundColor: Colors.transparent,
                 selectedColor: Colors.black54,
                 label: Text(
-                  ConstVariables.cryptoNames[1],
+                  GlobalHelper.cryptoNames[1],
                   style: TextStyle(
                     color: isVisibleETHPrice ? Colors.white : Colors.black,
                   ),
@@ -107,7 +107,7 @@ class _PricesCartesianChartState extends State<PricesCartesianChart> {
                 backgroundColor: Colors.transparent,
                 selectedColor: Colors.black54,
                 label: Text(
-                  ConstVariables.cryptoNames[2],
+                  GlobalHelper.cryptoNames[2],
                   style: TextStyle(
                     color: isVisibleSOLPrice ? Colors.white : Colors.black,
                   ),
