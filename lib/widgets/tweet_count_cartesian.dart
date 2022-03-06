@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infoviz_assign/models/cryptocurrency_model.dart';
-import 'package:infoviz_assign/screens/home_page/bloc/cubit/scroll_cubit.dart';
 import 'package:infoviz_assign/global_helper.dart';
 import 'package:infoviz_assign/widgets/custom_cartesian_chart.dart';
 import 'package:infoviz_assign/global_widgets/info_tooltip.dart';
@@ -135,22 +133,16 @@ class _TweetCountCartesianState extends State<TweetCountCartesian> {
           isFoldTweetCount ? const SizedBox() : const SizedBox(height: 10),
           isFoldTweetCount
               ? const SizedBox()
-              : MouseRegion(
-                  onEnter: (event) =>
-                      BlocProvider.of<ScrollCubit>(context).disable(),
-                  onExit: (event) =>
-                      BlocProvider.of<ScrollCubit>(context).enable(),
-                  child: CustomCartesianChart(
-                    trackballBehavior: widget._trackballBehaviorTweetCount,
-                    zoomPanBehavior: widget._zoomPanBehavior,
-                    bitcoins: widget.bitcoins,
-                    ethereums: widget.ethereums,
-                    solanas: widget.solanas,
-                    type: CartesianGraphType.tweetCount,
-                    isVisibleETHPrice: isVisibleETHPrice,
-                    isVisibleBTCPrice: isVisibleBTCPrice,
-                    isVisibleSOLPrice: isVisibleSOLPrice,
-                  ),
+              : CustomCartesianChart(
+                  trackballBehavior: widget._trackballBehaviorTweetCount,
+                  zoomPanBehavior: widget._zoomPanBehavior,
+                  bitcoins: widget.bitcoins,
+                  ethereums: widget.ethereums,
+                  solanas: widget.solanas,
+                  type: CartesianGraphType.tweetCount,
+                  isVisibleETHPrice: isVisibleETHPrice,
+                  isVisibleBTCPrice: isVisibleBTCPrice,
+                  isVisibleSOLPrice: isVisibleSOLPrice,
                 ),
         ],
       ),
