@@ -8,33 +8,34 @@ part 'crypto_data_event.dart';
 part 'crypto_data_state.dart';
 
 class CryptoDataBloc extends Bloc<CryptoDataEvent, CryptoDataState> {
+  final _cryptoRepository = CryptoRepository();
+
   CryptoDataBloc() : super(CryptoDataInitial()) {
-    final _cryptoRepository = CryptoRepository();
+    on<GetCryptoData>(_mapGetCryptoDataEventToState);
+  }
 
-    on<CryptoDataEvent>((event, emit) async {
-      if (event is GetCryptoData) {
-        emit(CryptoDataLoading());
-        final _bitcoins = await _cryptoRepository.getBitcoins();
-        final _ethereums = await _cryptoRepository.getEthereums();
-        final _solanas = await _cryptoRepository.getSolanas();
+  void _mapGetCryptoDataEventToState(
+      CryptoDataEvent event, Emitter<CryptoDataState> emit) async {
+    emit(CryptoDataLoading());
+    final _bitcoins = await _cryptoRepository.getBitcoins();
+    final _ethereums = await _cryptoRepository.getEthereums();
+    final _solanas = await _cryptoRepository.getSolanas();
 
-        if (_bitcoins.isEmpty || _ethereums.isEmpty || _solanas.isEmpty) {
-          emit(const CryptoDataError('Network error. Try again later.'));
-        } else {
-          final _latestSemantics = <CryptocurrencyModel>[
-            _bitcoins.last,
-            _ethereums.last,
-            _solanas.last
-          ];
+    if (_bitcoins.isEmpty || _ethereums.isEmpty || _solanas.isEmpty) {
+      emit(const CryptoDataError('Network error. Try again later.'));
+    } else {
+      final _latestSemantics = <CryptocurrencyModel>[
+        _bitcoins.last,
+        _ethereums.last,
+        _solanas.last
+      ];
 
-          emit(CryptoDataLoaded(
-            bitcoins: _bitcoins,
-            ethereums: _ethereums,
-            solanas: _solanas,
-            latestSemantics: _latestSemantics,
-          ));
-        }
-      }
-    });
+      emit(CryptoDataLoaded(
+        bitcoins: _bitcoins,
+        ethereums: _ethereums,
+        solanas: _solanas,
+        latestSemantics: _latestSemantics,
+      ));
+    }
   }
 }
