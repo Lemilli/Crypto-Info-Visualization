@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:infoviz_assign/models/cryptocurrency_model.dart';
 import 'package:infoviz_assign/global_helper.dart';
-import 'package:infoviz_assign/widgets/custom_cartesian_chart.dart';
 import 'package:infoviz_assign/global_widgets/info_tooltip.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class TweetCountCartesian extends StatefulWidget {
-  const TweetCountCartesian({
+import 'custom_cartesian_chart.dart';
+
+class PricesCartesianChart extends StatefulWidget {
+  const PricesCartesianChart({
     Key? key,
-    required TrackballBehavior trackballBehaviorTweetCount,
+    required TrackballBehavior trackballBehaviorPrice,
     required ZoomPanBehavior zoomPanBehavior,
     required this.bitcoins,
     required this.ethereums,
     required this.solanas,
-  })  : _trackballBehaviorTweetCount = trackballBehaviorTweetCount,
+  })  : _trackballBehaviorPrice = trackballBehaviorPrice,
         _zoomPanBehavior = zoomPanBehavior,
         super(key: key);
 
-  final TrackballBehavior _trackballBehaviorTweetCount;
+  final TrackballBehavior _trackballBehaviorPrice;
   final ZoomPanBehavior _zoomPanBehavior;
   final List<CryptocurrencyModel> bitcoins;
   final List<CryptocurrencyModel> ethereums;
   final List<CryptocurrencyModel> solanas;
 
   @override
-  State<TweetCountCartesian> createState() => _TweetCountCartesianState();
+  State<PricesCartesianChart> createState() => _PricesCartesianChartState();
 }
 
-class _TweetCountCartesianState extends State<TweetCountCartesian> {
-  bool isFoldTweetCount = false;
+class _PricesCartesianChartState extends State<PricesCartesianChart> {
+  bool isFoldPrices = false;
   bool isVisibleBTCPrice = true;
-  bool isVisibleETHPrice = true;
-  bool isVisibleSOLPrice = true;
+  bool isVisibleETHPrice = false;
+  bool isVisibleSOLPrice = false;
 
   void refresh() {
     setState(() {});
@@ -41,9 +42,7 @@ class _TweetCountCartesianState extends State<TweetCountCartesian> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: isFoldTweetCount
-            ? const Color(0xFFD6D6D6)
-            : const Color(0xFFFFFDF8),
+        color: isFoldPrices ? const Color(0xFFD6D6D6) : const Color(0xFFFFFDF8),
         borderRadius: BorderRadius.circular(18),
       ),
       padding: const EdgeInsets.fromLTRB(28, 14, 28, 14),
@@ -51,26 +50,25 @@ class _TweetCountCartesianState extends State<TweetCountCartesian> {
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            // ignore: prefer_const_literals_to_create_immutables
             children: [
               const Icon(
-                Icons.format_list_numbered_rounded,
+                Icons.price_change_outlined,
                 size: 35,
               ),
               const SizedBox(width: 10),
               const Text(
-                'Tweet Count',
+                'Prices',
                 style: TextStyle(
                   fontFamily: 'Poppins',
                   color: Colors.black,
-                  fontWeight: FontWeight.bold,
                   fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(width: 8),
               const InfoTooltip(
                   message:
-                      "Number of tweets that contain a cryptocurrency name\nUpdated every 15 minutes"),
+                      'Coin price in USD over time\nUpdated every 15 minutes'),
               const SizedBox(width: 10),
               ChoiceChip(
                 backgroundColor: Colors.transparent,
@@ -122,26 +120,26 @@ class _TweetCountCartesianState extends State<TweetCountCartesian> {
               const Spacer(),
               InkWell(
                 onTap: () => setState(() {
-                  isFoldTweetCount = !isFoldTweetCount;
+                  isFoldPrices = !isFoldPrices;
                 }),
-                child: isFoldTweetCount
+                child: isFoldPrices
                     ? const Icon(Icons.arrow_drop_up_outlined)
                     : const Icon(Icons.arrow_drop_down_outlined),
               )
             ],
           ),
-          isFoldTweetCount ? const SizedBox() : const SizedBox(height: 10),
-          isFoldTweetCount
+          isFoldPrices ? const SizedBox() : const SizedBox(height: 10),
+          isFoldPrices
               ? const SizedBox()
               : CustomCartesianChart(
-                  trackballBehavior: widget._trackballBehaviorTweetCount,
+                  trackballBehavior: widget._trackballBehaviorPrice,
                   zoomPanBehavior: widget._zoomPanBehavior,
                   bitcoins: widget.bitcoins,
                   ethereums: widget.ethereums,
                   solanas: widget.solanas,
-                  type: CartesianGraphType.tweetCount,
-                  isVisibleETHPrice: isVisibleETHPrice,
+                  type: CartesianGraphType.price,
                   isVisibleBTCPrice: isVisibleBTCPrice,
+                  isVisibleETHPrice: isVisibleETHPrice,
                   isVisibleSOLPrice: isVisibleSOLPrice,
                 ),
         ],

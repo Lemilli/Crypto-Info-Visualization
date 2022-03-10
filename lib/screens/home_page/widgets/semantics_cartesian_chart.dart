@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:infoviz_assign/models/cryptocurrency_model.dart';
 import 'package:infoviz_assign/global_helper.dart';
-import 'package:infoviz_assign/widgets/custom_cartesian_chart.dart';
 import 'package:infoviz_assign/global_widgets/info_tooltip.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
+import 'custom_cartesian_chart.dart';
 
 class SemanticsCartesianChart extends StatefulWidget {
   const SemanticsCartesianChart({

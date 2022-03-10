@@ -5,16 +5,16 @@ import 'package:infoviz_assign/screens/about_page/about_page.dart';
 import 'package:infoviz_assign/screens/home_page/bloc/crypto_data_bloc.dart';
 import 'package:infoviz_assign/global_helper.dart';
 import 'package:infoviz_assign/global_widgets/info_tooltip.dart';
-import 'package:infoviz_assign/widgets/price_stats_widget.dart';
-import 'package:infoviz_assign/widgets/prices_cartesian_chart.dart';
-import 'package:infoviz_assign/widgets/semantics_cartesian_chart.dart';
-import 'package:infoviz_assign/widgets/semantics_radial_bar.dart';
-import 'package:infoviz_assign/widgets/tweet_count_cartesian.dart';
+import 'package:infoviz_assign/screens/home_page/widgets/custom_cartesian_chart.dart';
+import 'package:infoviz_assign/screens/home_page/widgets/price_stats_widget.dart';
+import 'package:infoviz_assign/screens/home_page/widgets/prices_cartesian_chart.dart';
+import 'package:infoviz_assign/screens/home_page/widgets/semantics_cartesian_chart.dart';
+import 'package:infoviz_assign/screens/home_page/widgets/semantics_radial_bar.dart';
+import 'package:infoviz_assign/screens/home_page/widgets/trackball_pop_up.dart';
+import 'package:infoviz_assign/screens/home_page/widgets/tweet_count_cartesian.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../models/cryptocurrency_model.dart';
-import '../../widgets/custom_cartesian_chart.dart';
-import '../../widgets/trackball_pop_up.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
