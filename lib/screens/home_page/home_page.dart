@@ -7,14 +7,10 @@ import 'package:infoviz_assign/global_helper.dart';
 import 'package:infoviz_assign/global_widgets/info_tooltip.dart';
 import 'package:infoviz_assign/screens/home_page/widgets/custom_cartesian_chart.dart';
 import 'package:infoviz_assign/screens/home_page/widgets/price_stats_widget.dart';
-import 'package:infoviz_assign/screens/home_page/widgets/prices_cartesian_chart.dart';
-import 'package:infoviz_assign/screens/home_page/widgets/semantics_cartesian_chart.dart';
 import 'package:infoviz_assign/screens/home_page/widgets/semantics_radial_bar.dart';
-import 'package:infoviz_assign/screens/home_page/widgets/trackball_pop_up.dart';
-import 'package:infoviz_assign/screens/home_page/widgets/tweet_count_cartesian.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../models/cryptocurrency_model.dart';
+import 'widgets/cartesian_chart_wrapper.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,17 +20,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late TrackballBehavior _trackballBehaviorPrice,
-      _trackballBehaviorTweetCount,
-      _trackballBehaviorSemantics;
-  late ZoomPanBehavior _zoomPanBehavior;
   final _cryptoBloc = CryptoDataBloc();
 
   @override
   void initState() {
     super.initState();
 
-    _setupInteractivity();
     // get data from backend
     _cryptoBloc.add(GetCryptoData());
   }
@@ -192,19 +183,27 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       const SizedBox(height: 14),
-      PricesCartesianChart(
-        trackballBehaviorPrice: _trackballBehaviorPrice,
-        zoomPanBehavior: _zoomPanBehavior,
+      const CartesianChartWrapper(
+        graphType: CartesianGraphType.price,
+        title: 'Price',
+        icon: Icons.price_change_outlined,
+        tooltipHint: 'Coin price in USD over time\nUpdated every 15 minutes',
       ),
       const SizedBox(height: 30),
-      TweetCountCartesian(
-        trackballBehaviorTweetCount: _trackballBehaviorTweetCount,
-        zoomPanBehavior: _zoomPanBehavior,
+      const CartesianChartWrapper(
+        graphType: CartesianGraphType.tweetCount,
+        title: 'Tweet Count',
+        icon: Icons.format_list_numbered_rounded,
+        tooltipHint:
+            "Number of tweets that contain a cryptocurrency name\nUpdated every 15 minutes",
       ),
       const SizedBox(height: 30),
-      SemanticsCartesianChart(
-        trackballBehaviorSemantics: _trackballBehaviorSemantics,
-        zoomPanBehavior: _zoomPanBehavior,
+      const CartesianChartWrapper(
+        graphType: CartesianGraphType.semantics,
+        title: 'Semantics',
+        icon: Icons.speaker_notes_outlined,
+        tooltipHint:
+            "Average positivity or negativivity of tweets mentioning a cryptocurrency name, where\n 1: super positive\n 0: neutral\n-1: super negative",
       ),
       const SizedBox(height: 25),
       Align(
@@ -346,52 +345,5 @@ class _HomePageState extends State<HomePage> {
       ),
       const SizedBox(height: 10),
     ]);
-  }
-
-  void _setupInteractivity() {
-    _trackballBehaviorPrice = TrackballBehavior(
-      // Enables the trackball
-      enable: true,
-      tooltipSettings: const InteractiveTooltip(enable: true),
-      activationMode: ActivationMode.singleTap,
-      builder: (context, trackballDetails) => trackballDetails.point == null
-          ? const SizedBox()
-          : TrackballPopUpWidget(
-              trackballDetails: trackballDetails,
-              type: CartesianGraphType.price,
-            ),
-    );
-
-    _trackballBehaviorTweetCount = TrackballBehavior(
-      // Enables the trackball
-      enable: true,
-      activationMode: ActivationMode.singleTap,
-      tooltipSettings: const InteractiveTooltip(enable: true),
-      builder: (context, trackballDetails) => trackballDetails.point == null
-          ? const SizedBox()
-          : TrackballPopUpWidget(
-              trackballDetails: trackballDetails,
-              type: CartesianGraphType.tweetCount,
-            ),
-    );
-
-    _trackballBehaviorSemantics = TrackballBehavior(
-      // Enables the trackball
-      enable: true,
-      activationMode: ActivationMode.singleTap,
-      tooltipSettings: const InteractiveTooltip(enable: true),
-      builder: (context, trackballDetails) => trackballDetails.point == null
-          ? const SizedBox()
-          : TrackballPopUpWidget(
-              trackballDetails: trackballDetails,
-              type: CartesianGraphType.semantics,
-            ),
-    );
-
-    _zoomPanBehavior = ZoomPanBehavior(
-      enablePinching: true,
-      enablePanning: true,
-      zoomMode: ZoomMode.x,
-    );
   }
 }

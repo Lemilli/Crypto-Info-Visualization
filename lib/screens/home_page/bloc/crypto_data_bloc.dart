@@ -1,8 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:infoviz_assign/models/cryptocurrency_model.dart';
 import 'package:infoviz_assign/network/crypto_repository.dart';
-import 'package:meta/meta.dart';
+import 'package:infoviz_assign/screens/home_page/widgets/custom_cartesian_chart.dart';
+import 'package:infoviz_assign/screens/home_page/widgets/trackball_pop_up.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 part 'crypto_data_event.dart';
 part 'crypto_data_state.dart';

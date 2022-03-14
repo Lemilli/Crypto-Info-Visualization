@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:infoviz_assign/models/cryptocurrency_model.dart';
 import 'package:infoviz_assign/global_helper.dart';
 import 'package:infoviz_assign/global_widgets/info_tooltip.dart';
 import 'package:infoviz_assign/screens/home_page/bloc/crypto_data_bloc.dart';
@@ -9,24 +8,25 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'custom_cartesian_chart.dart';
 
-class SemanticsCartesianChart extends StatefulWidget {
-  const SemanticsCartesianChart({
+class CartesianChartWrapper extends StatefulWidget {
+  const CartesianChartWrapper({
     Key? key,
-    required TrackballBehavior trackballBehaviorSemantics,
-    required ZoomPanBehavior zoomPanBehavior,
-  })  : _trackballBehaviorSemantics = trackballBehaviorSemantics,
-        _zoomPanBehavior = zoomPanBehavior,
-        super(key: key);
+    required this.graphType,
+    required this.title,
+    required this.tooltipHint,
+    required this.icon,
+  }) : super(key: key);
 
-  final TrackballBehavior _trackballBehaviorSemantics;
-  final ZoomPanBehavior _zoomPanBehavior;
+  final CartesianGraphType graphType;
+  final String title;
+  final String tooltipHint;
+  final IconData icon;
 
   @override
-  State<SemanticsCartesianChart> createState() =>
-      _SemanticsCartesianChartState();
+  State<CartesianChartWrapper> createState() => _CartesianChartWrapperState();
 }
 
-class _SemanticsCartesianChartState extends State<SemanticsCartesianChart> {
+class _CartesianChartWrapperState extends State<CartesianChartWrapper> {
   @override
   Widget build(BuildContext context) {
     // Get original data from state
@@ -37,16 +37,28 @@ class _SemanticsCartesianChartState extends State<SemanticsCartesianChart> {
       ethereums: dataState.ethereums,
       solanas: dataState.solanas,
       latestSemantics: dataState.latestSemantics,
-      coinsSelected: [false, false, false],
+      coinsSelected: [false, false, true],
     );
+
+    final TrackballBehavior trackballBehavior;
+    switch (widget.graphType) {
+      case CartesianGraphType.price:
+        trackballBehavior = dataState.trackballBehaviorPrice;
+        break;
+      case CartesianGraphType.tweetCount:
+        trackballBehavior = dataState.trackballBehaviorTweetCount;
+        break;
+      case CartesianGraphType.semantics:
+        trackballBehavior = dataState.trackballBehaviorSemantics;
+        break;
+    }
 
     return BlocProvider(
       create: (_) => _cartesianGraphCubit,
       child: BlocBuilder<CartesianGraphCubit, CartesianGraphState>(
         builder: (context, state) {
           if (state is! CartesianGraphChanged) {
-            print(
-                "State is not CartesianGraphChanged in prices_cartesian_chart.dart");
+            print("State is not CartesianGraphChanged, but it should be.");
             return const SizedBox();
           } else {
             return Container(
@@ -63,14 +75,14 @@ class _SemanticsCartesianChartState extends State<SemanticsCartesianChart> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     // ignore: prefer_const_literals_to_create_immutables
                     children: [
-                      const Icon(
-                        Icons.speaker_notes_outlined,
+                      Icon(
+                        widget.icon,
                         size: 35,
                       ),
                       const SizedBox(width: 10),
-                      const Text(
-                        'Semantics',
-                        style: TextStyle(
+                      Text(
+                        widget.title,
+                        style: const TextStyle(
                           fontFamily: 'Poppins',
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -78,9 +90,7 @@ class _SemanticsCartesianChartState extends State<SemanticsCartesianChart> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      const InfoTooltip(
-                          message:
-                              "Average positivity or negativivity of tweets mentioning a cryptocurrency name, where\n 1: super positive\n 0: neutral\n-1: super negative"),
+                      InfoTooltip(message: widget.tooltipHint),
                       const SizedBox(width: 20),
                       Container(
                         width: 140,
@@ -147,9 +157,9 @@ class _SemanticsCartesianChartState extends State<SemanticsCartesianChart> {
                   state.isFolded
                       ? const SizedBox()
                       : CustomCartesianChart(
-                          trackballBehavior: widget._trackballBehaviorSemantics,
-                          zoomPanBehavior: widget._zoomPanBehavior,
-                          type: CartesianGraphType.semantics,
+                          trackballBehavior: trackballBehavior,
+                          zoomPanBehavior: dataState.zoomPanBehavior,
+                          type: widget.graphType,
                           isVisibleBTCPrice: state.coinsSelected[0],
                           isVisibleETHPrice: state.coinsSelected[1],
                           isVisibleSOLPrice: state.coinsSelected[2],

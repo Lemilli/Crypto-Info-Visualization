@@ -24,8 +24,7 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
   late String cryptoName;
   Color? color;
 
-  @override
-  void initState() {
+  void _setupToGraphType() {
     switch (widget.type) {
       case CartesianGraphType.price:
         displayedText = 'Price: ';
@@ -39,7 +38,6 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
     }
 
     color = widget.trackballDetails.series?.color;
-
     if (color == Colors.orange) {
       cryptoName = 'Bitcoin';
     } else if (color == Colors.grey) {
@@ -47,12 +45,12 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
     } else if (color == Colors.blue) {
       cryptoName = 'Solana';
     }
-
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    _setupToGraphType();
+
     return Container(
       height: 60,
       width: 156,

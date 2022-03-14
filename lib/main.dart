@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:infoviz_assign/screens/about_page/about_page.dart';
 import 'package:infoviz_assign/screens/home_page/home_page.dart';
 
 void main() {
