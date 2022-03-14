@@ -14,18 +14,12 @@ class SemanticsCartesianChart extends StatefulWidget {
     Key? key,
     required TrackballBehavior trackballBehaviorSemantics,
     required ZoomPanBehavior zoomPanBehavior,
-    required this.bitcoins,
-    required this.ethereums,
-    required this.solanas,
   })  : _trackballBehaviorSemantics = trackballBehaviorSemantics,
         _zoomPanBehavior = zoomPanBehavior,
         super(key: key);
 
   final TrackballBehavior _trackballBehaviorSemantics;
   final ZoomPanBehavior _zoomPanBehavior;
-  final List<CryptocurrencyModel> bitcoins;
-  final List<CryptocurrencyModel> ethereums;
-  final List<CryptocurrencyModel> solanas;
 
   @override
   State<SemanticsCartesianChart> createState() =>

@@ -14,18 +14,12 @@ class PricesCartesianChart extends StatefulWidget {
     Key? key,
     required TrackballBehavior trackballBehaviorPrice,
     required ZoomPanBehavior zoomPanBehavior,
-    required this.bitcoins,
-    required this.ethereums,
-    required this.solanas,
   })  : _trackballBehaviorPrice = trackballBehaviorPrice,
         _zoomPanBehavior = zoomPanBehavior,
         super(key: key);
 
   final TrackballBehavior _trackballBehaviorPrice;
   final ZoomPanBehavior _zoomPanBehavior;
-  final List<CryptocurrencyModel> bitcoins;
-  final List<CryptocurrencyModel> ethereums;
-  final List<CryptocurrencyModel> solanas;
 
   @override
   State<PricesCartesianChart> createState() => _PricesCartesianChartState();

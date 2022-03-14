@@ -14,18 +14,12 @@ class TweetCountCartesian extends StatefulWidget {
     Key? key,
     required TrackballBehavior trackballBehaviorTweetCount,
     required ZoomPanBehavior zoomPanBehavior,
-    required this.bitcoins,
-    required this.ethereums,
-    required this.solanas,
   })  : _trackballBehaviorTweetCount = trackballBehaviorTweetCount,
         _zoomPanBehavior = zoomPanBehavior,
         super(key: key);
 
   final TrackballBehavior _trackballBehaviorTweetCount;
   final ZoomPanBehavior _zoomPanBehavior;
-  final List<CryptocurrencyModel> bitcoins;
-  final List<CryptocurrencyModel> ethereums;
-  final List<CryptocurrencyModel> solanas;
 
   @override
   State<TweetCountCartesian> createState() => _TweetCountCartesianState();
