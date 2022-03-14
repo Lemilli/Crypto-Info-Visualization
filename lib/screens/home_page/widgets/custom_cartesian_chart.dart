@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infoviz_assign/global_helper.dart';
 import 'package:infoviz_assign/models/cryptocurrency_model.dart';
+import 'package:infoviz_assign/screens/home_page/bloc/crypto_data_bloc.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 enum CartesianGraphType {
@@ -14,9 +16,6 @@ class CustomCartesianChart extends StatefulWidget {
     Key? key,
     required this.trackballBehavior,
     required this.zoomPanBehavior,
-    required this.bitcoins,
-    required this.ethereums,
-    required this.solanas,
     required this.type,
     required this.isVisibleBTCPrice,
     required this.isVisibleETHPrice,
@@ -25,7 +24,6 @@ class CustomCartesianChart extends StatefulWidget {
 
   final TrackballBehavior trackballBehavior;
   final ZoomPanBehavior zoomPanBehavior;
-  final List<CryptocurrencyModel> bitcoins, ethereums, solanas;
   final CartesianGraphType type;
 
   final bool isVisibleBTCPrice;
@@ -41,59 +39,66 @@ class _CustomCartesianChartState extends State<CustomCartesianChart> {
   Widget build(BuildContext context) {
     final series = <LineSeries<CryptocurrencyModel, dynamic>>[];
 
-    if (widget.isVisibleBTCPrice) {
-      series.add(LineSeries<CryptocurrencyModel, dynamic>(
-        //enableTooltip: true,
-        dataSource: widget.bitcoins,
-        xValueMapper: (CryptocurrencyModel data, index) => data.datetime,
-        yValueMapper: (CryptocurrencyModel data, index) {
-          switch (widget.type) {
-            case CartesianGraphType.price:
-              return data.price;
-            case CartesianGraphType.tweetCount:
-              return data.keywordTweetNumber;
-            case CartesianGraphType.semantics:
-              return data.semanticsAll;
-          }
-        },
-        color: GlobalHelper.cryptosColors[0],
-      ));
-    }
+    if (BlocProvider.of<CryptoDataBloc>(context).state is CryptoDataLoaded) {
+      final state =
+          BlocProvider.of<CryptoDataBloc>(context).state as CryptoDataLoaded;
 
-    if (widget.isVisibleETHPrice) {
-      series.add(LineSeries<CryptocurrencyModel, dynamic>(
-        dataSource: widget.ethereums,
-        xValueMapper: (CryptocurrencyModel data, index) => data.datetime,
-        yValueMapper: (CryptocurrencyModel data, index) {
-          switch (widget.type) {
-            case CartesianGraphType.price:
-              return data.price;
-            case CartesianGraphType.tweetCount:
-              return data.keywordTweetNumber;
-            case CartesianGraphType.semantics:
-              return data.semanticsAll;
-          }
-        },
-        color: GlobalHelper.cryptosColors[1],
-      ));
-    }
+      if (widget.isVisibleBTCPrice) {
+        series.add(LineSeries<CryptocurrencyModel, dynamic>(
+          //enableTooltip: true,
+          dataSource: state.bitcoins,
+          xValueMapper: (CryptocurrencyModel data, index) => data.datetime,
+          yValueMapper: (CryptocurrencyModel data, index) {
+            switch (widget.type) {
+              case CartesianGraphType.price:
+                return data.price;
+              case CartesianGraphType.tweetCount:
+                return data.keywordTweetNumber;
+              case CartesianGraphType.semantics:
+                return data.semanticsAll;
+            }
+          },
+          color: GlobalHelper.cryptosColors[0],
+        ));
+      }
 
-    if (widget.isVisibleSOLPrice) {
-      series.add(LineSeries<CryptocurrencyModel, dynamic>(
-        dataSource: widget.solanas,
-        xValueMapper: (CryptocurrencyModel data, index) => data.datetime,
-        yValueMapper: (CryptocurrencyModel data, index) {
-          switch (widget.type) {
-            case CartesianGraphType.price:
-              return data.price;
-            case CartesianGraphType.tweetCount:
-              return data.keywordTweetNumber;
-            case CartesianGraphType.semantics:
-              return data.semanticsAll;
-          }
-        },
-        color: GlobalHelper.cryptosColors[2],
-      ));
+      if (widget.isVisibleETHPrice) {
+        series.add(LineSeries<CryptocurrencyModel, dynamic>(
+          dataSource: state.ethereums,
+          xValueMapper: (CryptocurrencyModel data, index) => data.datetime,
+          yValueMapper: (CryptocurrencyModel data, index) {
+            switch (widget.type) {
+              case CartesianGraphType.price:
+                return data.price;
+              case CartesianGraphType.tweetCount:
+                return data.keywordTweetNumber;
+              case CartesianGraphType.semantics:
+                return data.semanticsAll;
+            }
+          },
+          color: GlobalHelper.cryptosColors[1],
+        ));
+      }
+
+      if (widget.isVisibleSOLPrice) {
+        series.add(LineSeries<CryptocurrencyModel, dynamic>(
+          dataSource: state.solanas,
+          xValueMapper: (CryptocurrencyModel data, index) => data.datetime,
+          yValueMapper: (CryptocurrencyModel data, index) {
+            switch (widget.type) {
+              case CartesianGraphType.price:
+                return data.price;
+              case CartesianGraphType.tweetCount:
+                return data.keywordTweetNumber;
+              case CartesianGraphType.semantics:
+                return data.semanticsAll;
+            }
+          },
+          color: GlobalHelper.cryptosColors[2],
+        ));
+      }
+    } else {
+      print("Error: crypto data not loaded, but cartesian chart is visible");
     }
 
     return SfCartesianChart(
