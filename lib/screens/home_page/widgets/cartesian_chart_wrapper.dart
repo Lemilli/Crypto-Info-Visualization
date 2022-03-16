@@ -8,7 +8,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'custom_cartesian_chart.dart';
 
-class CartesianChartWrapper extends StatefulWidget {
+class CartesianChartWrapper extends StatelessWidget {
   const CartesianChartWrapper({
     Key? key,
     required this.graphType,
@@ -23,11 +23,6 @@ class CartesianChartWrapper extends StatefulWidget {
   final IconData icon;
 
   @override
-  State<CartesianChartWrapper> createState() => _CartesianChartWrapperState();
-}
-
-class _CartesianChartWrapperState extends State<CartesianChartWrapper> {
-  @override
   Widget build(BuildContext context) {
     // Get original data from state
     final dataState =
@@ -41,7 +36,7 @@ class _CartesianChartWrapperState extends State<CartesianChartWrapper> {
     );
 
     final TrackballBehavior trackballBehavior;
-    switch (widget.graphType) {
+    switch (graphType) {
       case CartesianGraphType.price:
         trackballBehavior = dataState.trackballBehaviorPrice;
         break;
@@ -58,8 +53,8 @@ class _CartesianChartWrapperState extends State<CartesianChartWrapper> {
       child: BlocBuilder<CartesianGraphCubit, CartesianGraphState>(
         builder: (context, state) {
           if (state is! CartesianGraphChanged) {
-            print("State is not CartesianGraphChanged, but it should be.");
-            return const SizedBox();
+            return const Text(
+                'Error. State is not CartesianGraphChanged, but it should be.');
           } else {
             return Container(
               decoration: BoxDecoration(
@@ -76,12 +71,12 @@ class _CartesianChartWrapperState extends State<CartesianChartWrapper> {
                     // ignore: prefer_const_literals_to_create_immutables
                     children: [
                       Icon(
-                        widget.icon,
+                        icon,
                         size: 35,
                       ),
                       const SizedBox(width: 10),
                       Text(
-                        widget.title,
+                        title,
                         style: const TextStyle(
                           fontFamily: 'Poppins',
                           color: Colors.black,
@@ -90,7 +85,7 @@ class _CartesianChartWrapperState extends State<CartesianChartWrapper> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      InfoTooltip(message: widget.tooltipHint),
+                      InfoTooltip(message: tooltipHint),
                       const SizedBox(width: 20),
                       Container(
                         width: 140,
@@ -128,7 +123,7 @@ class _CartesianChartWrapperState extends State<CartesianChartWrapper> {
                                     setState(() {
                                       state.coinsSelected[i] =
                                           !state.coinsSelected[i];
-                                    }); // setstate of stateful builder right above to rebuild checkbox
+                                    }); // local setstate of stateful builder parent right above to rebuild checkbox
                                   },
                                 ),
                               ),
@@ -159,7 +154,7 @@ class _CartesianChartWrapperState extends State<CartesianChartWrapper> {
                       : CustomCartesianChart(
                           trackballBehavior: trackballBehavior,
                           zoomPanBehavior: dataState.zoomPanBehavior,
-                          type: widget.graphType,
+                          type: graphType,
                           isVisibleBTCPrice: state.coinsSelected[0],
                           isVisibleETHPrice: state.coinsSelected[1],
                           isVisibleSOLPrice: state.coinsSelected[2],

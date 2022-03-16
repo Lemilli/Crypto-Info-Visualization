@@ -9,30 +9,16 @@ import 'package:infoviz_assign/screens/home_page/widgets/custom_cartesian_chart.
 import 'package:infoviz_assign/screens/home_page/widgets/price_stats_widget.dart';
 import 'package:infoviz_assign/screens/home_page/widgets/semantics_radial_bar.dart';
 
-import '../../models/cryptocurrency_model.dart';
 import 'widgets/cartesian_chart_wrapper.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final _cryptoBloc = CryptoDataBloc();
-
-  @override
-  void initState() {
-    super.initState();
-
-    // get data from backend
-    _cryptoBloc.add(GetCryptoData());
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    // get data from backend
+    final _cryptoBloc = CryptoDataBloc();
+    _cryptoBloc.add(GetCryptoData());
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -40,8 +26,6 @@ class _HomePageState extends State<HomePage> {
         providers: [
           BlocProvider(create: (context) => _cryptoBloc),
         ],
-        // Disable scroll of the page whenever user is hovering over a zoomable chart/graph
-        // So that user can scroll the chart to zoom in
         child: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 60),
@@ -56,14 +40,7 @@ class _HomePageState extends State<HomePage> {
                     child: const Center(child: CircularProgressIndicator()),
                   );
                 } else if (state is CryptoDataLoaded) {
-                  return _buildLoaded(
-                    context,
-                    state.bitcoins,
-                    state.ethereums,
-                    state.solanas,
-                    state.latestSemantics,
-                    width,
-                  );
+                  return const LoadedUI();
                 } else if (state is CryptoDataError) {
                   return SizedBox(
                     height: height,
@@ -92,15 +69,21 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
 
-  Widget _buildLoaded(
-    BuildContext context,
-    List<CryptocurrencyModel> bitcoins,
-    List<CryptocurrencyModel> ethereums,
-    List<CryptocurrencyModel> solanas,
-    List<CryptocurrencyModel> latestSemantics,
-    double width,
-  ) {
+class LoadedUI extends StatelessWidget {
+  const LoadedUI({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    assert(
+      BlocProvider.of<CryptoDataBloc>(context).state is CryptoDataLoaded,
+      'state must be CryptoDataLoaded according to if statement from parent',
+    );
+
+    final dataState =
+        BlocProvider.of<CryptoDataBloc>(context).state as CryptoDataLoaded;
+
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
       const SizedBox(height: 30),
       Row(
@@ -223,7 +206,7 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(width: 8),
             InfoTooltip(
               message: DateTime.now()
-                      .difference(latestSemantics.first.datetime)
+                      .difference(dataState.latestSemantics.first.datetime)
                       .inMinutes
                       .toString() +
                   ' minutes ago',
@@ -255,15 +238,15 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             SemanticsRadialBar(
-              latestSemantics: latestSemantics,
+              latestSemantics: dataState.latestSemantics,
               semanticsType: SemanticsType.positive,
             ),
             SemanticsRadialBar(
-              latestSemantics: latestSemantics,
+              latestSemantics: dataState.latestSemantics,
               semanticsType: SemanticsType.negative,
             ),
             SemanticsRadialBar(
-              latestSemantics: latestSemantics,
+              latestSemantics: dataState.latestSemantics,
               semanticsType: SemanticsType.neutral,
             ),
           ],
@@ -286,7 +269,7 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(width: 8),
             InfoTooltip(
               message: DateTime.now()
-                      .difference(latestSemantics.first.datetime)
+                      .difference(dataState.latestSemantics.first.datetime)
                       .inMinutes
                       .toString() +
                   ' minutes ago',
@@ -308,28 +291,30 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       const SizedBox(height: 10),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          PriceStatsWidget(
-            width: width,
-            cryptoModel: latestSemantics[0],
-            imagePath: GlobalHelper.cryptoImages[0],
-            cryptoName: GlobalHelper.cryptoNames[0],
-          ),
-          PriceStatsWidget(
-            width: width,
-            cryptoModel: latestSemantics[1],
-            imagePath: GlobalHelper.cryptoImages[1],
-            cryptoName: GlobalHelper.cryptoNames[1],
-          ),
-          PriceStatsWidget(
-            width: width,
-            cryptoModel: latestSemantics[2],
-            imagePath: GlobalHelper.cryptoImages[2],
-            cryptoName: GlobalHelper.cryptoNames[2],
-          ),
-        ],
+      LayoutBuilder(
+        builder: (context, constraints) => Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            PriceStatsWidget(
+              width: constraints.maxWidth,
+              cryptoModel: dataState.latestSemantics[0],
+              imagePath: GlobalHelper.cryptoImages[0],
+              cryptoName: GlobalHelper.cryptoNames[0],
+            ),
+            PriceStatsWidget(
+              width: constraints.maxWidth,
+              cryptoModel: dataState.latestSemantics[1],
+              imagePath: GlobalHelper.cryptoImages[1],
+              cryptoName: GlobalHelper.cryptoNames[1],
+            ),
+            PriceStatsWidget(
+              width: constraints.maxWidth,
+              cryptoModel: dataState.latestSemantics[2],
+              imagePath: GlobalHelper.cryptoImages[2],
+              cryptoName: GlobalHelper.cryptoNames[2],
+            ),
+          ],
+        ),
       ),
       const SizedBox(height: 80),
       const Align(

@@ -5,7 +5,7 @@ import 'package:infoviz_assign/global_helper.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class PriceStatsWidget extends StatelessWidget {
-  PriceStatsWidget({
+  const PriceStatsWidget({
     Key? key,
     required this.width,
     required this.cryptoModel,

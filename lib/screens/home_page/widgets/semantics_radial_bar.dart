@@ -5,8 +5,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 enum SemanticsType { positive, negative, neutral }
 
-class SemanticsRadialBar extends StatefulWidget {
-  const SemanticsRadialBar({
+class SemanticsRadialBar extends StatelessWidget {
+  SemanticsRadialBar({
     Key? key,
     required this.latestSemantics,
     required this.semanticsType,
@@ -14,33 +14,26 @@ class SemanticsRadialBar extends StatefulWidget {
 
   final List<CryptocurrencyModel> latestSemantics;
   final SemanticsType semanticsType;
+  late final String semanticsTypeString;
+  late final Color textColor;
+  late final TooltipBehavior _tooltipBehavior;
+  late final String imagePath;
 
-  @override
-  State<SemanticsRadialBar> createState() => _SemanticsRadialBarState();
-}
-
-class _SemanticsRadialBarState extends State<SemanticsRadialBar> {
-  late String semanticsTypeString;
-  late Color textColor;
-  late TooltipBehavior _tooltipBehavior;
-  late String imagePath;
-
-  @override
-  void initState() {
-    switch (widget.semanticsType) {
+  void _setupData() {
+    switch (semanticsType) {
       case SemanticsType.positive:
         semanticsTypeString = 'Positive';
         textColor = const Color(0xFF8BDA4D);
 
-        if ((widget.latestSemantics[0].percentageOfPositiveTweets >=
-                widget.latestSemantics[1].percentageOfPositiveTweets) &&
-            widget.latestSemantics[0].percentageOfPositiveTweets >=
-                widget.latestSemantics[2].percentageOfPositiveTweets) {
+        if ((latestSemantics[0].percentageOfPositiveTweets >=
+                latestSemantics[1].percentageOfPositiveTweets) &&
+            latestSemantics[0].percentageOfPositiveTweets >=
+                latestSemantics[2].percentageOfPositiveTweets) {
           imagePath = GlobalHelper.cryptoImages[0];
-        } else if ((widget.latestSemantics[1].percentageOfPositiveTweets >
-                widget.latestSemantics[0].percentageOfPositiveTweets) &&
-            widget.latestSemantics[1].percentageOfPositiveTweets >=
-                widget.latestSemantics[2].percentageOfPositiveTweets) {
+        } else if ((latestSemantics[1].percentageOfPositiveTweets >
+                latestSemantics[0].percentageOfPositiveTweets) &&
+            latestSemantics[1].percentageOfPositiveTweets >=
+                latestSemantics[2].percentageOfPositiveTweets) {
           imagePath = GlobalHelper.cryptoImages[1];
         } else {
           imagePath = GlobalHelper.cryptoImages[2];
@@ -50,15 +43,15 @@ class _SemanticsRadialBarState extends State<SemanticsRadialBar> {
         semanticsTypeString = 'Negative';
         textColor = const Color(0xFFEB5252);
 
-        if ((widget.latestSemantics[0].percentageOfNegativeTweets >=
-                widget.latestSemantics[1].percentageOfNegativeTweets) &&
-            widget.latestSemantics[0].percentageOfNegativeTweets >=
-                widget.latestSemantics[2].percentageOfNegativeTweets) {
+        if ((latestSemantics[0].percentageOfNegativeTweets >=
+                latestSemantics[1].percentageOfNegativeTweets) &&
+            latestSemantics[0].percentageOfNegativeTweets >=
+                latestSemantics[2].percentageOfNegativeTweets) {
           imagePath = GlobalHelper.cryptoImages[0];
-        } else if ((widget.latestSemantics[1].percentageOfNegativeTweets >
-                widget.latestSemantics[0].percentageOfNegativeTweets) &&
-            widget.latestSemantics[1].percentageOfNegativeTweets >=
-                widget.latestSemantics[2].percentageOfNegativeTweets) {
+        } else if ((latestSemantics[1].percentageOfNegativeTweets >
+                latestSemantics[0].percentageOfNegativeTweets) &&
+            latestSemantics[1].percentageOfNegativeTweets >=
+                latestSemantics[2].percentageOfNegativeTweets) {
           imagePath = GlobalHelper.cryptoImages[1];
         } else {
           imagePath = GlobalHelper.cryptoImages[2];
@@ -69,15 +62,15 @@ class _SemanticsRadialBarState extends State<SemanticsRadialBar> {
         textColor = const Color(0xFFFFA859);
         semanticsTypeString = 'Neutral';
 
-        if ((widget.latestSemantics[0].percentageOfNeutralTweets >=
-                widget.latestSemantics[1].percentageOfNeutralTweets) &&
-            widget.latestSemantics[0].percentageOfNeutralTweets >=
-                widget.latestSemantics[2].percentageOfNeutralTweets) {
+        if ((latestSemantics[0].percentageOfNeutralTweets >=
+                latestSemantics[1].percentageOfNeutralTweets) &&
+            latestSemantics[0].percentageOfNeutralTweets >=
+                latestSemantics[2].percentageOfNeutralTweets) {
           imagePath = GlobalHelper.cryptoImages[0];
-        } else if ((widget.latestSemantics[1].percentageOfNeutralTweets >
-                widget.latestSemantics[0].percentageOfNeutralTweets) &&
-            widget.latestSemantics[1].percentageOfNeutralTweets >=
-                widget.latestSemantics[2].percentageOfNeutralTweets) {
+        } else if ((latestSemantics[1].percentageOfNeutralTweets >
+                latestSemantics[0].percentageOfNeutralTweets) &&
+            latestSemantics[1].percentageOfNeutralTweets >=
+                latestSemantics[2].percentageOfNeutralTweets) {
           imagePath = GlobalHelper.cryptoImages[1];
         } else {
           imagePath = GlobalHelper.cryptoImages[2];
@@ -92,12 +85,12 @@ class _SemanticsRadialBarState extends State<SemanticsRadialBar> {
       format: 'point.x: point.y%',
       tooltipPosition: TooltipPosition.pointer,
     );
-
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    _setupData();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -143,14 +136,14 @@ class _SemanticsRadialBarState extends State<SemanticsRadialBar> {
               series: <CircularSeries>[
                 RadialBarSeries<CryptocurrencyModel, String>(
                   gap: '5%',
-                  dataSource: widget.latestSemantics,
+                  dataSource: latestSemantics,
                   enableTooltip: true,
                   cornerStyle: CornerStyle.bothCurve,
                   maximumValue: 100,
                   xValueMapper: (CryptocurrencyModel data, i) =>
                       GlobalHelper.cryptoNames[i],
                   yValueMapper: (CryptocurrencyModel data, _) {
-                    switch (widget.semanticsType) {
+                    switch (semanticsType) {
                       case SemanticsType.positive:
                         return data.percentageOfPositiveTweets * 100;
                       case SemanticsType.negative:

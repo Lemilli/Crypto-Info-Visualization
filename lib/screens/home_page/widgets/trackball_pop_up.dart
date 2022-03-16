@@ -5,8 +5,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'custom_cartesian_chart.dart';
 
-class TrackballPopUpWidget extends StatefulWidget {
-  const TrackballPopUpWidget({
+class TrackballPopUpWidget extends StatelessWidget {
+  TrackballPopUpWidget({
     Key? key,
     required this.trackballDetails,
     required this.type,
@@ -14,18 +14,12 @@ class TrackballPopUpWidget extends StatefulWidget {
 
   final TrackballDetails trackballDetails;
   final CartesianGraphType type;
-
-  @override
-  State<TrackballPopUpWidget> createState() => _TrackballPopUpWidgetState();
-}
-
-class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
-  late String displayedText;
-  late String cryptoName;
-  Color? color;
+  late final String displayedText;
+  late final String cryptoName;
+  late final Color? color;
 
   void _setupToGraphType() {
-    switch (widget.type) {
+    switch (type) {
       case CartesianGraphType.price:
         displayedText = 'Price: ';
         break;
@@ -37,7 +31,7 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
         break;
     }
 
-    color = widget.trackballDetails.series?.color;
+    color = trackballDetails.series?.color;
     if (color == Colors.orange) {
       cryptoName = 'Bitcoin';
     } else if (color == Colors.grey) {
@@ -96,7 +90,7 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
               ),
               Text(
                 DateFormat('dd-MM-yyyy - HH:mm:ss')
-                    .format(widget.trackballDetails.point!.x),
+                    .format(trackballDetails.point!.x),
                 style: const TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.normal,
@@ -118,12 +112,12 @@ class _TrackballPopUpWidgetState extends State<TrackballPopUpWidget> {
                 ),
               ),
               Text(
-                widget.type == CartesianGraphType.price
+                type == CartesianGraphType.price
                     ? GlobalHelper.formatDecimalPattern(
-                            widget.trackballDetails.point!.y) +
+                            trackballDetails.point!.y) +
                         r'$'
                     : GlobalHelper.formatDecimalPattern(
-                        widget.trackballDetails.point!.y),
+                        trackballDetails.point!.y),
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 10,

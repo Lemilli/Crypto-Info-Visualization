@@ -11,7 +11,7 @@ enum CartesianGraphType {
   semantics,
 }
 
-class CustomCartesianChart extends StatefulWidget {
+class CustomCartesianChart extends StatelessWidget {
   const CustomCartesianChart({
     Key? key,
     required this.trackballBehavior,
@@ -31,11 +31,6 @@ class CustomCartesianChart extends StatefulWidget {
   final bool isVisibleSOLPrice;
 
   @override
-  State<CustomCartesianChart> createState() => _CustomCartesianChartState();
-}
-
-class _CustomCartesianChartState extends State<CustomCartesianChart> {
-  @override
   Widget build(BuildContext context) {
     final series = <LineSeries<CryptocurrencyModel, dynamic>>[];
 
@@ -43,13 +38,13 @@ class _CustomCartesianChartState extends State<CustomCartesianChart> {
       final state =
           BlocProvider.of<CryptoDataBloc>(context).state as CryptoDataLoaded;
 
-      if (widget.isVisibleBTCPrice) {
+      if (isVisibleBTCPrice) {
         series.add(LineSeries<CryptocurrencyModel, dynamic>(
           //enableTooltip: true,
           dataSource: state.bitcoins,
           xValueMapper: (CryptocurrencyModel data, index) => data.datetime,
           yValueMapper: (CryptocurrencyModel data, index) {
-            switch (widget.type) {
+            switch (type) {
               case CartesianGraphType.price:
                 return data.price;
               case CartesianGraphType.tweetCount:
@@ -62,12 +57,12 @@ class _CustomCartesianChartState extends State<CustomCartesianChart> {
         ));
       }
 
-      if (widget.isVisibleETHPrice) {
+      if (isVisibleETHPrice) {
         series.add(LineSeries<CryptocurrencyModel, dynamic>(
           dataSource: state.ethereums,
           xValueMapper: (CryptocurrencyModel data, index) => data.datetime,
           yValueMapper: (CryptocurrencyModel data, index) {
-            switch (widget.type) {
+            switch (type) {
               case CartesianGraphType.price:
                 return data.price;
               case CartesianGraphType.tweetCount:
@@ -80,12 +75,12 @@ class _CustomCartesianChartState extends State<CustomCartesianChart> {
         ));
       }
 
-      if (widget.isVisibleSOLPrice) {
+      if (isVisibleSOLPrice) {
         series.add(LineSeries<CryptocurrencyModel, dynamic>(
           dataSource: state.solanas,
           xValueMapper: (CryptocurrencyModel data, index) => data.datetime,
           yValueMapper: (CryptocurrencyModel data, index) {
-            switch (widget.type) {
+            switch (type) {
               case CartesianGraphType.price:
                 return data.price;
               case CartesianGraphType.tweetCount:
@@ -103,8 +98,8 @@ class _CustomCartesianChartState extends State<CustomCartesianChart> {
 
     return SfCartesianChart(
       primaryXAxis: DateTimeAxis(),
-      trackballBehavior: widget.trackballBehavior,
-      zoomPanBehavior: widget.zoomPanBehavior,
+      trackballBehavior: trackballBehavior,
+      zoomPanBehavior: zoomPanBehavior,
       series: series,
     );
   }
