@@ -33,7 +33,7 @@ class CartesianChartWrapper extends StatelessWidget {
       ethereums: dataState.ethereums,
       solanas: dataState.solanas,
       latestSemantics: dataState.latestSemantics,
-      coinsSelected: [false, false, true],
+      coinsSelected: [true, true, true],
     );
 
     final TrackballBehavior trackballBehavior;
@@ -48,6 +48,11 @@ class CartesianChartWrapper extends StatelessWidget {
         trackballBehavior = dataState.trackballBehaviorSemantics;
         break;
     }
+
+    _cartesianGraphCubit.filterByDate(
+      DateFilterType.day1,
+      dataState,
+    );
 
     return BlocProvider(
       create: (_) => _cartesianGraphCubit,
@@ -88,37 +93,75 @@ class CartesianChartWrapper extends StatelessWidget {
                       InfoTooltip(message: tooltipHint),
                       const SizedBox(width: 20),
                       DropdownFilter(
-                          hintText: 'Select Coins',
-                          items: List.generate(
-                            state.coinsSelected.length,
-                            (i) => DropdownMenuItem(
-                              value: i.toString(),
-                              enabled: false,
-                              child: StatefulBuilder(
-                                builder: (context, setState) =>
-                                    CheckboxListTile(
-                                  value: state.coinsSelected[i],
-                                  contentPadding:
-                                      const EdgeInsets.symmetric(horizontal: 0),
-                                  controlAffinity:
-                                      ListTileControlAffinity.leading,
-                                  title: Text(GlobalHelper.cryptoNames[i]),
-                                  onChanged: (value) {
-                                    _cartesianGraphCubit.updateCoinsVisibility(
-                                      i,
-                                      !state.coinsSelected[i],
-                                    );
+                        hintText: 'Select Coins',
+                        items: List.generate(
+                          state.coinsSelected.length,
+                          (i) => DropdownMenuItem(
+                            value: i.toString(),
+                            enabled: false,
+                            child: StatefulBuilder(
+                              builder: (context, setState) => CheckboxListTile(
+                                value: state.coinsSelected[i],
+                                contentPadding:
+                                    const EdgeInsets.symmetric(horizontal: 0),
+                                controlAffinity:
+                                    ListTileControlAffinity.leading,
+                                title: Text(GlobalHelper.cryptoNames[i]),
+                                onChanged: (value) {
+                                  _cartesianGraphCubit.updateCoinsVisibility(
+                                    i,
+                                    !state.coinsSelected[i],
+                                  );
 
-                                    setState(() {
-                                      state.coinsSelected[i] =
-                                          !state.coinsSelected[i];
-                                    }); // local setstate of stateful builder parent right above to rebuild checkbox
-                                  },
-                                ),
+                                  setState(() {
+                                    state.coinsSelected[i] =
+                                        !state.coinsSelected[i];
+                                  }); // local setstate of stateful builder parent right above to rebuild checkbox
+                                },
                               ),
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                       const SizedBox(width: 8),
+                      DropdownFilter(
+                        hintText: 'Filter by Date',
+                        items: [
+                          DropdownMenuItem(
+                            value: "12H",
+                            onTap: () {
+                              _cartesianGraphCubit.filterByDate(
+                                DateFilterType.hour12,
+                                dataState,
+                              );
+                            },
+                            enabled: true,
+                            child: const Text('12H'),
+                          ),
+                          DropdownMenuItem(
+                            value: "1D",
+                            onTap: () {
+                              _cartesianGraphCubit.filterByDate(
+                                DateFilterType.day1,
+                                dataState,
+                              );
+                            },
+                            enabled: true,
+                            child: const Text('1D'),
+                          ),
+                          DropdownMenuItem(
+                            value: "7D",
+                            onTap: () {
+                              _cartesianGraphCubit.filterByDate(
+                                DateFilterType.day7,
+                                dataState,
+                              );
+                            },
+                            enabled: true,
+                            child: const Text('7D'),
+                          ),
+                        ],
+                      ),
                       const Spacer(),
                       InkWell(
                         onTap: () {
