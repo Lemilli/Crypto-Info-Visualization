@@ -4,6 +4,7 @@ import 'package:infoviz_assign/global_helper.dart';
 import 'package:infoviz_assign/global_widgets/info_tooltip.dart';
 import 'package:infoviz_assign/screens/home_page/bloc/crypto_data_bloc.dart';
 import 'package:infoviz_assign/screens/home_page/bloc/cubit/cartesian_graph_cubit.dart';
+import 'package:infoviz_assign/screens/home_page/widgets/dropdown_filter.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'custom_cartesian_chart.dart';
@@ -68,7 +69,6 @@ class CartesianChartWrapper extends StatelessWidget {
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    // ignore: prefer_const_literals_to_create_immutables
                     children: [
                       Icon(
                         icon,
@@ -87,19 +87,8 @@ class CartesianChartWrapper extends StatelessWidget {
                       const SizedBox(width: 8),
                       InfoTooltip(message: tooltipHint),
                       const SizedBox(width: 20),
-                      Container(
-                        width: 140,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0, horizontal: 8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: Colors.black, width: 0.5),
-                        ),
-                        child: DropdownButton<String>(
-                          value: null,
-                          isExpanded: true,
-                          underline: const SizedBox(),
-                          focusColor: Colors.transparent,
+                      DropdownFilter(
+                          hintText: 'Select Coins',
                           items: List.generate(
                             state.coinsSelected.length,
                             (i) => DropdownMenuItem(
@@ -128,11 +117,8 @@ class CartesianChartWrapper extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          ),
-                          onChanged: (_) {},
-                          hint: const Text("Select Coins"),
-                        ),
-                      ),
+                          )),
+                      const SizedBox(width: 8),
                       const Spacer(),
                       InkWell(
                         onTap: () {
