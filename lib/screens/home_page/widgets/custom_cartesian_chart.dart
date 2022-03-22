@@ -42,6 +42,7 @@ class CustomCartesianChart extends StatelessWidget {
     if (isVisibleBTCPrice) {
       series.add(LineSeries<CryptocurrencyModel, dynamic>(
         //enableTooltip: true,
+        animationDuration: 0,
         dataSource: state.bitcoins,
         xValueMapper: (CryptocurrencyModel data, index) => data.datetime,
         yValueMapper: (CryptocurrencyModel data, index) {
@@ -60,6 +61,7 @@ class CustomCartesianChart extends StatelessWidget {
 
     if (isVisibleETHPrice) {
       series.add(LineSeries<CryptocurrencyModel, dynamic>(
+        animationDuration: 0,
         dataSource: state.ethereums,
         xValueMapper: (CryptocurrencyModel data, index) => data.datetime,
         yValueMapper: (CryptocurrencyModel data, index) {
@@ -78,6 +80,7 @@ class CustomCartesianChart extends StatelessWidget {
 
     if (isVisibleSOLPrice) {
       series.add(LineSeries<CryptocurrencyModel, dynamic>(
+        animationDuration: 0,
         dataSource: state.solanas,
         xValueMapper: (CryptocurrencyModel data, index) => data.datetime,
         yValueMapper: (CryptocurrencyModel data, index) {
