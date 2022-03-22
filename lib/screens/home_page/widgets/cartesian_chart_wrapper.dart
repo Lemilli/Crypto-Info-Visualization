@@ -49,11 +49,6 @@ class CartesianChartWrapper extends StatelessWidget {
         break;
     }
 
-    _cartesianGraphCubit.filterByDate(
-      DateFilterType.day1,
-      dataState,
-    );
-
     return BlocProvider(
       create: (_) => _cartesianGraphCubit,
       child: BlocBuilder<CartesianGraphCubit, CartesianGraphState>(
@@ -125,10 +120,11 @@ class CartesianChartWrapper extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       DropdownFilter(
+                        showSelected: true,
                         hintText: 'Filter by Date',
                         items: [
                           DropdownMenuItem(
-                            value: "12H",
+                            value: '12H',
                             onTap: () {
                               _cartesianGraphCubit.filterByDate(
                                 DateFilterType.hour12,
@@ -139,7 +135,7 @@ class CartesianChartWrapper extends StatelessWidget {
                             child: const Text('12H'),
                           ),
                           DropdownMenuItem(
-                            value: "1D",
+                            value: '1D',
                             onTap: () {
                               _cartesianGraphCubit.filterByDate(
                                 DateFilterType.day1,
@@ -150,7 +146,7 @@ class CartesianChartWrapper extends StatelessWidget {
                             child: const Text('1D'),
                           ),
                           DropdownMenuItem(
-                            value: "7D",
+                            value: '7D',
                             onTap: () {
                               _cartesianGraphCubit.filterByDate(
                                 DateFilterType.day7,

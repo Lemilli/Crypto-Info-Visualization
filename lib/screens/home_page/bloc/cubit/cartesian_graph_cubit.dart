@@ -58,6 +58,7 @@ class CartesianGraphCubit extends Cubit<CartesianGraphState> {
     if (state is CartesianGraphChanged) {
       final cartesianState = state as CartesianGraphChanged;
       late final int cuttedListLength;
+      late final String dropdownText;
 
       // Length of the values is based on the fact that there's 1 data item each 15 minutes
       // It means that there's 4 items each hour
@@ -65,12 +66,15 @@ class CartesianGraphCubit extends Cubit<CartesianGraphState> {
       switch (type) {
         case DateFilterType.hour12:
           cuttedListLength = 48;
+          dropdownText = '12H';
           break;
         case DateFilterType.day1:
           cuttedListLength = 96;
+          dropdownText = '1D';
           break;
         case DateFilterType.day7:
           cuttedListLength = 672;
+          dropdownText = '7D';
           break;
       }
       // Can't cut more than size of a list
@@ -90,6 +94,7 @@ class CartesianGraphCubit extends Cubit<CartesianGraphState> {
         bitcoins: bitcoins,
         ethereums: ethereums,
         solanas: solanas,
+        filterByDateText: dropdownText,
       ));
     }
   }
