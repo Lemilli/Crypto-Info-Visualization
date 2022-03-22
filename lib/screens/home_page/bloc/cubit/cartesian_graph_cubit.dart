@@ -57,37 +57,40 @@ class CartesianGraphCubit extends Cubit<CartesianGraphState> {
   void filterByDate(DateFilterType type, CryptoDataLoaded dataState) {
     if (state is CartesianGraphChanged) {
       final cartesianState = state as CartesianGraphChanged;
-      late final DateTime splitDatetime;
+      late final int cuttedListLength;
 
+      // Length of the values is based on the fact that there's 1 data item each 15 minutes
+      // It means that there's 4 items each hour
+      // 12 hours: 12 * 4 = 48 items
       switch (type) {
         case DateFilterType.hour12:
-          splitDatetime = DateTime.now().subtract(const Duration(hours: 12));
+          cuttedListLength = 48;
           break;
         case DateFilterType.day1:
-          splitDatetime = DateTime.now().subtract(const Duration(days: 1));
+          cuttedListLength = 96;
           break;
         case DateFilterType.day7:
-          splitDatetime = DateTime.now().subtract(const Duration(days: 7));
+          cuttedListLength = 672;
           break;
       }
+      // Can't cut more than size of a list
+      if (cuttedListLength >= dataState.bitcoins.length) return;
 
-      for (int i = dataState.bitcoins.length - 1; i >= 0; i--) {
-        if (dataState.bitcoins[i].datetime.isBefore(splitDatetime)) {
-          final bitcoins =
-              dataState.bitcoins.sublist(i, dataState.bitcoins.length);
-          final ethereums =
-              dataState.ethereums.sublist(i, dataState.ethereums.length);
-          final solanas =
-              dataState.solanas.sublist(i, dataState.solanas.length);
+      final bitcoins = dataState.bitcoins.sublist(
+          dataState.bitcoins.length - cuttedListLength,
+          dataState.bitcoins.length);
+      final ethereums = dataState.ethereums.sublist(
+          dataState.ethereums.length - cuttedListLength,
+          dataState.ethereums.length);
+      final solanas = dataState.solanas.sublist(
+          dataState.ethereums.length - cuttedListLength,
+          dataState.solanas.length);
 
-          emit(cartesianState.copyWith(
-            bitcoins: bitcoins,
-            ethereums: ethereums,
-            solanas: solanas,
-          ));
-          break;
-        }
-      }
+      emit(cartesianState.copyWith(
+        bitcoins: bitcoins,
+        ethereums: ethereums,
+        solanas: solanas,
+      ));
     }
   }
 

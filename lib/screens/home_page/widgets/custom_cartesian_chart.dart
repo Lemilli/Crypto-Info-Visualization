@@ -96,7 +96,6 @@ class CustomCartesianChart extends StatelessWidget {
 
     return SfCartesianChart(
       primaryXAxis: DateTimeAxis(),
-      enableAxisAnimation: false,
       trackballBehavior: trackballBehavior,
       zoomPanBehavior: zoomPanBehavior,
       series: series,
