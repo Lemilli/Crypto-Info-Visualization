@@ -30,7 +30,11 @@ class APIHanlder {
         ),
       );
 
-      return cryptocurrencyModelsFromJson(response.data);
+      // reverse list so that fresh data goes in order from fresh to old
+      assert(response.data is List<dynamic>);
+      final List<dynamic> data = response.data.reversed.toList();
+
+      return cryptocurrencyModelsFromJson(data);
     } on DioError catch (e) {
       print(e.message);
       return List.empty();

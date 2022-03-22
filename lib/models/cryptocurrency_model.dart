@@ -6,6 +6,7 @@ List<CryptocurrencyModel> cryptocurrencyModelsFromJson(List<dynamic> str) {
   List<CryptocurrencyModel> results = List.empty(growable: true);
   for (Map<String, dynamic> element in str) {
     results.add(CryptocurrencyModel.fromJson(element));
+    if (results.length >= 672) break;
   }
 
   return results;
@@ -53,8 +54,7 @@ class CryptocurrencyModel {
   factory CryptocurrencyModel.fromJson(Map<String, dynamic> map) {
     return CryptocurrencyModel(
       price: map["price"],
-      priceChangePercentage24H:
-          map["price_change_percentage_24h"],
+      priceChangePercentage24H: map["price_change_percentage_24h"],
       highPrice24H: map["high_price_24h"],
       lowPrice24H: map["low_price_24h"],
       marketDominancePercentage: map["market_dominance_percentage"],

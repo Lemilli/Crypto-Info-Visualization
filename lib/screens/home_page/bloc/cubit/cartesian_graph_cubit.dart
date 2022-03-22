@@ -78,17 +78,11 @@ class CartesianGraphCubit extends Cubit<CartesianGraphState> {
           break;
       }
       // Can't cut more than size of a list
-      if (cuttedListLength >= dataState.bitcoins.length) return;
+      if (cuttedListLength > dataState.bitcoins.length) return;
 
-      final bitcoins = dataState.bitcoins.sublist(
-          dataState.bitcoins.length - cuttedListLength,
-          dataState.bitcoins.length);
-      final ethereums = dataState.ethereums.sublist(
-          dataState.ethereums.length - cuttedListLength,
-          dataState.ethereums.length);
-      final solanas = dataState.solanas.sublist(
-          dataState.ethereums.length - cuttedListLength,
-          dataState.solanas.length);
+      final bitcoins = dataState.bitcoins.sublist(0, cuttedListLength);
+      final ethereums = dataState.ethereums.sublist(0, cuttedListLength);
+      final solanas = dataState.solanas.sublist(0, cuttedListLength);
 
       emit(cartesianState.copyWith(
         bitcoins: bitcoins,
