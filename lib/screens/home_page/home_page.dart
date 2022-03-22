@@ -166,14 +166,14 @@ class LoadedUI extends StatelessWidget {
         ),
       ),
       const SizedBox(height: 14),
-      CartesianChartWrapper(
+      const CartesianChartWrapper(
         graphType: CartesianGraphType.price,
         title: 'Price',
         icon: Icons.price_change_outlined,
         tooltipHint: 'Coin price in USD over time\nUpdated every 15 minutes',
       ),
       const SizedBox(height: 30),
-      CartesianChartWrapper(
+      const CartesianChartWrapper(
         graphType: CartesianGraphType.tweetCount,
         title: 'Tweet Count',
         icon: Icons.format_list_numbered_rounded,
@@ -181,7 +181,7 @@ class LoadedUI extends StatelessWidget {
             "Number of tweets that contain a cryptocurrency name\nUpdated every 15 minutes",
       ),
       const SizedBox(height: 30),
-      CartesianChartWrapper(
+      const CartesianChartWrapper(
         graphType: CartesianGraphType.semantics,
         title: 'Semantics',
         icon: Icons.speaker_notes_outlined,

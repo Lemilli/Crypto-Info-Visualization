@@ -11,7 +11,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'custom_cartesian_chart.dart';
 
 class CartesianChartWrapper extends StatelessWidget {
-  CartesianChartWrapper({
+  const CartesianChartWrapper({
     Key? key,
     required this.graphType,
     required this.title,
@@ -23,7 +23,6 @@ class CartesianChartWrapper extends StatelessWidget {
   final String title;
   final String tooltipHint;
   final IconData icon;
-  double zoomFactor = 1.0;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +58,8 @@ class CartesianChartWrapper extends StatelessWidget {
       zoomMode: ZoomMode.x,
       maximumZoomLevel: 0.8,
     );
+
+    double zoomFactor = 1.0;
 
     return BlocProvider(
       create: (_) => _cartesianGraphCubit,
@@ -98,32 +99,35 @@ class CartesianChartWrapper extends StatelessWidget {
                       const SizedBox(width: 8),
                       InfoTooltip(message: tooltipHint),
                       const SizedBox(width: 16),
-                      MaterialButtonRoundedRectangle(
-                        text: 'Zoom In',
-                        onPressed: () {
-                          zoomFactor -= 0.1;
-                          zoomFactor = zoomFactor.clamp(0.01, 1.0);
-                          print(zoomFactor);
-                          zoomPanBehavior.zoomToSingleAxis(
-                            dateTimeAxis,
-                            0.5,
-                            zoomFactor,
-                          );
-                        },
-                      ),
+                      state.isFolded
+                          ? const SizedBox()
+                          : MaterialButtonRoundedRectangle(
+                              text: 'Zoom In',
+                              onPressed: () {
+                                zoomFactor -= 0.1;
+                                zoomFactor = zoomFactor.clamp(0.01, 1.0);
+                                zoomPanBehavior.zoomToSingleAxis(
+                                  dateTimeAxis,
+                                  0.5,
+                                  zoomFactor,
+                                );
+                              },
+                            ),
                       const SizedBox(width: 6),
-                      MaterialButtonRoundedRectangle(
-                        text: 'Zoom Out',
-                        onPressed: () {
-                          zoomFactor += 0.1;
-                          zoomFactor = zoomFactor.clamp(0.0, 1.0);
-                          zoomPanBehavior.zoomToSingleAxis(
-                            dateTimeAxis,
-                            0.5,
-                            zoomFactor,
-                          );
-                        },
-                      ),
+                      state.isFolded
+                          ? const SizedBox()
+                          : MaterialButtonRoundedRectangle(
+                              text: 'Zoom Out',
+                              onPressed: () {
+                                zoomFactor += 0.1;
+                                zoomFactor = zoomFactor.clamp(0.0, 1.0);
+                                zoomPanBehavior.zoomToSingleAxis(
+                                  dateTimeAxis,
+                                  0.5,
+                                  zoomFactor,
+                                );
+                              },
+                            ),
                       const Spacer(),
                       DropdownFilter(
                         hintText: 'Select Coins',
