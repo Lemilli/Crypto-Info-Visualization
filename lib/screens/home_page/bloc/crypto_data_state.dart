@@ -39,7 +39,6 @@ class CryptoDataLoaded extends CryptoDataState {
       _trackballBehaviorTweetCount;
   TrackballBehavior get trackballBehaviorSemantics =>
       _trackballBehaviorSemantics;
-  ZoomPanBehavior get zoomPanBehavior => _zoomPanBehavior;
 
   final _trackballBehaviorPrice = TrackballBehavior(
     // Enables the trackball
@@ -78,11 +77,5 @@ class CryptoDataLoaded extends CryptoDataState {
             trackballDetails: trackballDetails,
             type: CartesianGraphType.semantics,
           ),
-  );
-
-  final _zoomPanBehavior = ZoomPanBehavior(
-    enablePinching: true,
-    enablePanning: true,
-    zoomMode: ZoomMode.x,
   );
 }

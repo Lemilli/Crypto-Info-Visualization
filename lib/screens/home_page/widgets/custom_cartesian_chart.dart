@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infoviz_assign/global_helper.dart';
 import 'package:infoviz_assign/models/cryptocurrency_model.dart';
 import 'package:infoviz_assign/screens/home_page/bloc/cubit/cartesian_graph_cubit.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 enum CartesianGraphType {
@@ -38,6 +39,24 @@ class CustomCartesianChart extends StatelessWidget {
         is CartesianGraphChanged);
     final state = BlocProvider.of<CartesianGraphCubit>(context).state
         as CartesianGraphChanged;
+
+    final NumericAxis numericAxis;
+
+    switch (type) {
+      case CartesianGraphType.price:
+        numericAxis = NumericAxis(
+          decimalPlaces: 0,
+          numberFormat: NumberFormat.compact(),
+          labelFormat: '{value} \$',
+        );
+        break;
+      case CartesianGraphType.tweetCount:
+        numericAxis = NumericAxis(decimalPlaces: 0);
+        break;
+      case CartesianGraphType.semantics:
+        numericAxis = NumericAxis(decimalPlaces: 2);
+        break;
+    }
 
     if (isVisibleBTCPrice) {
       series.add(LineSeries<CryptocurrencyModel, dynamic>(
@@ -98,7 +117,8 @@ class CustomCartesianChart extends StatelessWidget {
     }
 
     return SfCartesianChart(
-      primaryXAxis: DateTimeAxis(),
+      primaryXAxis: state.dateTimeAxis,
+      primaryYAxis: numericAxis,
       trackballBehavior: trackballBehavior,
       zoomPanBehavior: zoomPanBehavior,
       series: series,

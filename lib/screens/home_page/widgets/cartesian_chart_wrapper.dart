@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infoviz_assign/global_helper.dart';
 import 'package:infoviz_assign/global_widgets/info_tooltip.dart';
+import 'package:infoviz_assign/global_widgets/material_button_rounded_rectangle.dart';
 import 'package:infoviz_assign/screens/home_page/bloc/crypto_data_bloc.dart';
 import 'package:infoviz_assign/screens/home_page/bloc/cubit/cartesian_graph_cubit.dart';
 import 'package:infoviz_assign/screens/home_page/widgets/dropdown_filter.dart';
@@ -10,7 +11,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'custom_cartesian_chart.dart';
 
 class CartesianChartWrapper extends StatelessWidget {
-  const CartesianChartWrapper({
+  CartesianChartWrapper({
     Key? key,
     required this.graphType,
     required this.title,
@@ -22,17 +23,20 @@ class CartesianChartWrapper extends StatelessWidget {
   final String title;
   final String tooltipHint;
   final IconData icon;
+  double zoomFactor = 1.0;
 
   @override
   Widget build(BuildContext context) {
     // Get original data from state
     final dataState =
         BlocProvider.of<CryptoDataBloc>(context).state as CryptoDataLoaded;
+    final dateTimeAxis = DateTimeAxis();
     final _cartesianGraphCubit = CartesianGraphCubit(
       bitcoins: dataState.bitcoins,
       ethereums: dataState.ethereums,
       solanas: dataState.solanas,
       latestSemantics: dataState.latestSemantics,
+      dateTimeAxis: dateTimeAxis,
       coinsSelected: [true, true, true],
     );
 
@@ -48,6 +52,13 @@ class CartesianChartWrapper extends StatelessWidget {
         trackballBehavior = dataState.trackballBehaviorSemantics;
         break;
     }
+    final zoomPanBehavior = ZoomPanBehavior(
+      enablePinching: true,
+      enablePanning: true,
+      enableDoubleTapZooming: true,
+      zoomMode: ZoomMode.x,
+      maximumZoomLevel: 0.8,
+    );
 
     return BlocProvider(
       create: (_) => _cartesianGraphCubit,
@@ -86,7 +97,34 @@ class CartesianChartWrapper extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       InfoTooltip(message: tooltipHint),
-                      const SizedBox(width: 20),
+                      const SizedBox(width: 16),
+                      MaterialButtonRoundedRectangle(
+                        text: 'Zoom In',
+                        onPressed: () {
+                          zoomFactor -= 0.1;
+                          zoomFactor = zoomFactor.clamp(0.01, 1.0);
+                          print(zoomFactor);
+                          zoomPanBehavior.zoomToSingleAxis(
+                            dateTimeAxis,
+                            0.5,
+                            zoomFactor,
+                          );
+                        },
+                      ),
+                      const SizedBox(width: 6),
+                      MaterialButtonRoundedRectangle(
+                        text: 'Zoom Out',
+                        onPressed: () {
+                          zoomFactor += 0.1;
+                          zoomFactor = zoomFactor.clamp(0.0, 1.0);
+                          zoomPanBehavior.zoomToSingleAxis(
+                            dateTimeAxis,
+                            0.5,
+                            zoomFactor,
+                          );
+                        },
+                      ),
+                      const Spacer(),
                       DropdownFilter(
                         hintText: 'Select Coins',
                         items: List.generate(
@@ -118,7 +156,7 @@ class CartesianChartWrapper extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 12),
                       DropdownFilter(
                         showSelected: true,
                         hintText: 'Filter by Date',
@@ -158,7 +196,7 @@ class CartesianChartWrapper extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const Spacer(),
+                      const SizedBox(width: 20),
                       InkWell(
                         onTap: () {
                           state.isFolded
@@ -178,7 +216,7 @@ class CartesianChartWrapper extends StatelessWidget {
                       ? const SizedBox()
                       : CustomCartesianChart(
                           trackballBehavior: trackballBehavior,
-                          zoomPanBehavior: dataState.zoomPanBehavior,
+                          zoomPanBehavior: zoomPanBehavior,
                           type: graphType,
                           isVisibleBTCPrice: state.coinsSelected[0],
                           isVisibleETHPrice: state.coinsSelected[1],

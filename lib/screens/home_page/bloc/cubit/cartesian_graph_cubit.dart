@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:infoviz_assign/models/cryptocurrency_model.dart';
 import 'package:infoviz_assign/screens/home_page/bloc/crypto_data_bloc.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 part 'cartesian_graph_state.dart';
 
@@ -17,6 +18,7 @@ class CartesianGraphCubit extends Cubit<CartesianGraphState> {
     required List<CryptocurrencyModel> ethereums,
     required List<CryptocurrencyModel> solanas,
     required List<CryptocurrencyModel> latestSemantics,
+    required DateTimeAxis dateTimeAxis,
     List<bool> coinsSelected = const [true, true, true],
   }) : super(
           CartesianGraphChanged(
@@ -25,6 +27,7 @@ class CartesianGraphCubit extends Cubit<CartesianGraphState> {
             solanas: solanas,
             latestSemantics: latestSemantics,
             coinsSelected: coinsSelected,
+            dateTimeAxis: dateTimeAxis,
           ),
         );
 

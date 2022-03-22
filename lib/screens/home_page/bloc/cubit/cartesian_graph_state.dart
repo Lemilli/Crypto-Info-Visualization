@@ -12,6 +12,7 @@ class CartesianGraphChanged extends CartesianGraphState {
   final List<CryptocurrencyModel> ethereums;
   final List<CryptocurrencyModel> solanas;
   final List<CryptocurrencyModel> latestSemantics;
+  final DateTimeAxis dateTimeAxis;
   final List<bool> coinsSelected; //  Order: BTC, ETH, SOL
   final bool isFolded;
   final String? filterByDateText;
@@ -21,6 +22,7 @@ class CartesianGraphChanged extends CartesianGraphState {
     required this.ethereums,
     required this.solanas,
     required this.latestSemantics,
+    required this.dateTimeAxis, // null by default
     this.coinsSelected = const [true, true, true],
     this.isFolded = false,
     this.filterByDateText, // null by default
@@ -31,6 +33,7 @@ class CartesianGraphChanged extends CartesianGraphState {
     List<CryptocurrencyModel>? ethereums,
     List<CryptocurrencyModel>? solanas,
     List<CryptocurrencyModel>? latestSemantics,
+    DateTimeAxis? dateTimeAxis,
     List<bool>? coinsSelected,
     bool? isFolded,
     String? filterByDateText,
@@ -40,6 +43,7 @@ class CartesianGraphChanged extends CartesianGraphState {
         ethereums: ethereums ?? this.ethereums,
         solanas: solanas ?? this.solanas,
         latestSemantics: latestSemantics ?? this.latestSemantics,
+        dateTimeAxis: dateTimeAxis ?? this.dateTimeAxis,
         coinsSelected: coinsSelected ?? this.coinsSelected,
         isFolded: isFolded ?? this.isFolded,
         filterByDateText: filterByDateText ?? this.filterByDateText,
