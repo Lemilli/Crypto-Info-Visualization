@@ -186,7 +186,7 @@ class LoadedUI extends StatelessWidget {
         title: 'Semantics',
         icon: Icons.speaker_notes_outlined,
         tooltipHint:
-            "Average positivity or negativivity of tweets mentioning a cryptocurrency name, where\n 1: super positive\n 0: neutral\n-1: super negative",
+            "Average positivity or negativivity of tweets mentioning a cryptocurrency name, where\n 100: super positive\n 0: neutral\n-100: super negative",
       ),
       const SizedBox(height: 25),
       Align(

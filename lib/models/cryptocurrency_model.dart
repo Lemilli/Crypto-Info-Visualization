@@ -60,9 +60,9 @@ class CryptocurrencyModel {
       marketDominancePercentage: map["market_dominance_percentage"],
       keywordTweetNumber: map["keyword_tweet_number"],
       datetime: DateTime.parse(map["datetime"]).toLocal(),
-      semanticsAll: double.parse(map["semantics_all"].toStringAsFixed(2)),
-      semanticsPositiveTweets: map["semantics_positive_tweets"],
-      semanticsNegativeTweets: map["semantics_negative_tweets"],
+      semanticsAll: double.parse(map["semantics_all"].toStringAsFixed(2)) * 100,
+      semanticsPositiveTweets: map["semantics_positive_tweets"] * 100,
+      semanticsNegativeTweets: map["semantics_negative_tweets"] * 100,
       circulatingSupply: map["circulating_supply"],
       percentageOfPositiveTweets:
           double.parse(map["percentage_of_positive_tweets"].toStringAsFixed(2)),
