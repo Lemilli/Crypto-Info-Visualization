@@ -28,9 +28,9 @@ class CryptoDataBloc extends Bloc<CryptoDataEvent, CryptoDataState> {
       emit(const CryptoDataError('Network error. Try again later.'));
     } else {
       final _latestSemantics = <CryptocurrencyModel>[
-        _bitcoins.last,
-        _ethereums.last,
-        _solanas.last
+        _bitcoins.first,
+        _ethereums.first,
+        _solanas.first
       ];
 
       emit(CryptoDataLoaded(
