@@ -47,7 +47,7 @@ class TrackballPopUpWidget extends StatelessWidget {
 
     return Container(
       height: 60,
-      width: 156,
+      width: 140,
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
       decoration: const BoxDecoration(
         color: Colors.black,
@@ -89,7 +89,7 @@ class TrackballPopUpWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                DateFormat('dd-MM-yyyy - HH:mm:ss')
+                DateFormat('dd-MM-yyyy - HH:mm')
                     .format(trackballDetails.point!.x),
                 style: const TextStyle(
                   fontSize: 10,
