@@ -16,16 +16,25 @@ class CartesianGraphChanged extends CartesianGraphState {
   final List<bool> coinsSelected; //  Order: BTC, ETH, SOL
   final bool isFolded;
   final String? filterByDateText;
+  double zoomFactor;
+  final zoomPanBehavior = ZoomPanBehavior(
+    enablePinching: true,
+    enablePanning: true,
+    enableDoubleTapZooming: true,
+    zoomMode: ZoomMode.x,
+    maximumZoomLevel: 0.8,
+  );
 
-  const CartesianGraphChanged({
+  CartesianGraphChanged({
     required this.bitcoins,
     required this.ethereums,
     required this.solanas,
     required this.latestSemantics,
-    required this.dateTimeAxis, // null by default
+    required this.dateTimeAxis,
     this.coinsSelected = const [true, true, true],
     this.isFolded = false,
     this.filterByDateText, // null by default
+    this.zoomFactor = 1.0,
   });
 
   CartesianGraphChanged copyWith({
@@ -37,6 +46,7 @@ class CartesianGraphChanged extends CartesianGraphState {
     List<bool>? coinsSelected,
     bool? isFolded,
     String? filterByDateText,
+    double? zoomFactor,
   }) =>
       CartesianGraphChanged(
         bitcoins: bitcoins ?? this.bitcoins,
@@ -47,9 +57,16 @@ class CartesianGraphChanged extends CartesianGraphState {
         coinsSelected: coinsSelected ?? this.coinsSelected,
         isFolded: isFolded ?? this.isFolded,
         filterByDateText: filterByDateText ?? this.filterByDateText,
+        zoomFactor: zoomFactor ?? this.zoomFactor,
       );
 
   @override
-  List<Object> get props =>
-      [bitcoins, ethereums, solanas, latestSemantics, coinsSelected, isFolded];
+  List<Object> get props => [
+        bitcoins,
+        ethereums,
+        solanas,
+        latestSemantics,
+        coinsSelected,
+        isFolded,
+      ];
 }

@@ -30,7 +30,7 @@ class CartesianChartWrapper extends StatelessWidget {
     final dataState =
         BlocProvider.of<CryptoDataBloc>(context).state as CryptoDataLoaded;
     final dateTimeAxis = DateTimeAxis();
-    final _cartesianGraphCubit = CartesianGraphCubit(
+    final cartesianGraphCubit = CartesianGraphCubit(
       bitcoins: dataState.bitcoins,
       ethereums: dataState.ethereums,
       solanas: dataState.solanas,
@@ -39,30 +39,11 @@ class CartesianChartWrapper extends StatelessWidget {
       coinsSelected: [true, true, true],
     );
 
-    final TrackballBehavior trackballBehavior;
-    switch (graphType) {
-      case CartesianGraphType.price:
-        trackballBehavior = dataState.trackballBehaviorPrice;
-        break;
-      case CartesianGraphType.tweetCount:
-        trackballBehavior = dataState.trackballBehaviorTweetCount;
-        break;
-      case CartesianGraphType.semantics:
-        trackballBehavior = dataState.trackballBehaviorSemantics;
-        break;
-    }
-    final zoomPanBehavior = ZoomPanBehavior(
-      enablePinching: true,
-      enablePanning: true,
-      enableDoubleTapZooming: true,
-      zoomMode: ZoomMode.x,
-      maximumZoomLevel: 0.8,
-    );
-
-    double zoomFactor = 1.0;
+    final trackballBehavior =
+        cartesianGraphCubit.getTrackballBehaviorByType(graphType, dataState);
 
     return BlocProvider(
-      create: (_) => _cartesianGraphCubit,
+      create: (_) => cartesianGraphCubit,
       child: BlocBuilder<CartesianGraphCubit, CartesianGraphState>(
         builder: (context, state) {
           if (state is! CartesianGraphChanged) {
@@ -104,13 +85,7 @@ class CartesianChartWrapper extends StatelessWidget {
                           : MaterialButtonRoundedRectangle(
                               text: 'Zoom In',
                               onPressed: () {
-                                zoomFactor -= 0.1;
-                                zoomFactor = zoomFactor.clamp(0.01, 1.0);
-                                zoomPanBehavior.zoomToSingleAxis(
-                                  dateTimeAxis,
-                                  0.5,
-                                  zoomFactor,
-                                );
+                                cartesianGraphCubit.zoomIn();
                               },
                             ),
                       const SizedBox(width: 6),
@@ -119,13 +94,7 @@ class CartesianChartWrapper extends StatelessWidget {
                           : MaterialButtonRoundedRectangle(
                               text: 'Zoom Out',
                               onPressed: () {
-                                zoomFactor += 0.1;
-                                zoomFactor = zoomFactor.clamp(0.0, 1.0);
-                                zoomPanBehavior.zoomToSingleAxis(
-                                  dateTimeAxis,
-                                  0.5,
-                                  zoomFactor,
-                                );
+                                cartesianGraphCubit.zoomOut();
                               },
                             ),
                       const Spacer(),
@@ -145,7 +114,7 @@ class CartesianChartWrapper extends StatelessWidget {
                                     ListTileControlAffinity.leading,
                                 title: Text(GlobalHelper.cryptoNames[i]),
                                 onChanged: (value) {
-                                  _cartesianGraphCubit.updateCoinsVisibility(
+                                  cartesianGraphCubit.updateCoinsVisibility(
                                     i,
                                     !state.coinsSelected[i],
                                   );
@@ -168,7 +137,7 @@ class CartesianChartWrapper extends StatelessWidget {
                           DropdownMenuItem(
                             value: '12H',
                             onTap: () {
-                              _cartesianGraphCubit.filterByDate(
+                              cartesianGraphCubit.filterByDate(
                                 DateFilterType.hour12,
                                 dataState,
                               );
@@ -179,7 +148,7 @@ class CartesianChartWrapper extends StatelessWidget {
                           DropdownMenuItem(
                             value: '1D',
                             onTap: () {
-                              _cartesianGraphCubit.filterByDate(
+                              cartesianGraphCubit.filterByDate(
                                 DateFilterType.day1,
                                 dataState,
                               );
@@ -190,7 +159,7 @@ class CartesianChartWrapper extends StatelessWidget {
                           DropdownMenuItem(
                             value: '7D',
                             onTap: () {
-                              _cartesianGraphCubit.filterByDate(
+                              cartesianGraphCubit.filterByDate(
                                 DateFilterType.day7,
                                 dataState,
                               );
@@ -204,8 +173,8 @@ class CartesianChartWrapper extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           state.isFolded
-                              ? _cartesianGraphCubit.unfold()
-                              : _cartesianGraphCubit.fold();
+                              ? cartesianGraphCubit.unfold()
+                              : cartesianGraphCubit.fold();
                         },
                         child: state.isFolded
                             ? const Icon(Icons.arrow_drop_up_outlined)
@@ -220,7 +189,6 @@ class CartesianChartWrapper extends StatelessWidget {
                       ? const SizedBox()
                       : CustomCartesianChart(
                           trackballBehavior: trackballBehavior,
-                          zoomPanBehavior: zoomPanBehavior,
                           type: graphType,
                           isVisibleBTCPrice: state.coinsSelected[0],
                           isVisibleETHPrice: state.coinsSelected[1],

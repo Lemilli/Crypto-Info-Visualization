@@ -16,7 +16,6 @@ class CustomCartesianChart extends StatelessWidget {
   const CustomCartesianChart({
     Key? key,
     required this.trackballBehavior,
-    required this.zoomPanBehavior,
     required this.type,
     required this.isVisibleBTCPrice,
     required this.isVisibleETHPrice,
@@ -24,7 +23,6 @@ class CustomCartesianChart extends StatelessWidget {
   }) : super(key: key);
 
   final TrackballBehavior trackballBehavior;
-  final ZoomPanBehavior zoomPanBehavior;
   final CartesianGraphType type;
 
   final bool isVisibleBTCPrice;
@@ -120,7 +118,7 @@ class CustomCartesianChart extends StatelessWidget {
       primaryXAxis: state.dateTimeAxis,
       primaryYAxis: numericAxis,
       trackballBehavior: trackballBehavior,
-      zoomPanBehavior: zoomPanBehavior,
+      zoomPanBehavior: state.zoomPanBehavior,
       series: series,
     );
   }
