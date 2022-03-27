@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final cryptocurrencyModel = cryptocurrencyModelFromJson(jsonString);
-
 List<CryptocurrencyModel> cryptocurrencyModelsFromJson(List<dynamic> str) {
   List<CryptocurrencyModel> results = List.empty(growable: true);
   for (Map<String, dynamic> element in str) {
@@ -11,12 +7,6 @@ List<CryptocurrencyModel> cryptocurrencyModelsFromJson(List<dynamic> str) {
 
   return results;
 }
-
-// CryptocurrencyModel cryptocurrencyModelFromJson(String str) =>
-//     CryptocurrencyModel.fromJson(json.decode(str));
-
-// String cryptocurrencyModelToJson(CryptocurrencyModel data) =>
-//     json.encode(data.toJson());
 
 class CryptocurrencyModel {
   CryptocurrencyModel({

@@ -1,23 +1,25 @@
 import 'package:dio/dio.dart';
+import 'package:infoviz_assign/models/random_tweet.dart';
 
 import '../models/cryptocurrency_model.dart';
 
 class APIHanlder {
-  var dio = Dio();
+  late Dio dio;
+
+  APIHanlder() {
+    BaseOptions options = BaseOptions(
+      baseUrl: 'http://3.250.213.87',
+      headers: {'content-Type': 'application/json'},
+      connectTimeout: 10000,
+      receiveTimeout: 10000,
+    );
+
+    dio = Dio(options);
+  }
 
   //btc, eth, sol
   Future<List<CryptocurrencyModel>> getCryptoData(String coinShortName) async {
-    dio.options.responseType = ResponseType.json;
-    dio.options.headers = {
-      'content-Type': 'application/json',
-    };
-    dio.options.connectTimeout = 10000;
-    dio.options.receiveTimeout = 10000;
-
     try {
-      // final url = kIsWeb
-      //     ? 'http://127.0.0.1:8000/' + coinShortName
-      //     : 'http://10.0.2.2:8000/' + coinShortName;  // android emulator localohst
       final url = 'http://3.250.213.87/' + coinShortName;
 
       final response = await dio.get(
@@ -41,6 +43,32 @@ class APIHanlder {
     } catch (e) {
       print('Exception unknown');
       return List.empty();
+    }
+  }
+
+  Future<RandomTweet?> getRandomTweet(String coinShortName) async {
+    try {
+      final url = '/random_tweet_' + coinShortName;
+
+      final response = await dio.get(
+        url,
+        options: Options(
+          validateStatus: (status) {
+            print(status);
+            return status! < 400;
+          },
+        ),
+      );
+
+      print(response.data.first);
+
+      return randomTweetFromJson(response.data.first);
+    } on DioError catch (e) {
+      print(e.message);
+      return null;
+    } catch (e) {
+      print('Exception unknown');
+      return null;
     }
   }
 }

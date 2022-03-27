@@ -1,4 +1,5 @@
 import 'package:infoviz_assign/models/cryptocurrency_model.dart';
+import 'package:infoviz_assign/models/random_tweet.dart';
 import 'package:infoviz_assign/network/api_handler.dart';
 
 class CryptoRepository {
@@ -12,4 +13,8 @@ class CryptoRepository {
       _apiHanlder.getCryptoData('eth');
   Future<List<CryptocurrencyModel>> getSolanas() =>
       _apiHanlder.getCryptoData('sol');
+
+  Future<RandomTweet?> getRandomTweetBTC() => _apiHanlder.getRandomTweet('btc');
+  Future<RandomTweet?> getRandomTweetETH() => _apiHanlder.getRandomTweet('eth');
+  Future<RandomTweet?> getRandomTweetSOL() => _apiHanlder.getRandomTweet('sol');
 }

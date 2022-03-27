@@ -22,12 +22,18 @@ class CryptoDataLoaded extends CryptoDataState {
   final List<CryptocurrencyModel> ethereums;
   final List<CryptocurrencyModel> solanas;
   final List<CryptocurrencyModel> latestSemantics;
+  final RandomTweet? randomTweetBTC;
+  final RandomTweet? randomTweetETH;
+  final RandomTweet? randomTweetSOL;
 
   CryptoDataLoaded({
     required this.bitcoins,
     required this.ethereums,
     required this.solanas,
     required this.latestSemantics,
+    required this.randomTweetBTC,
+    required this.randomTweetETH,
+    required this.randomTweetSOL,
   });
 
   @override
