@@ -1,6 +1,5 @@
-RandomTweet randomTweetFromJson(Map<String, dynamic> json) {
-  return RandomTweet.fromJson(json);
-}
+RandomTweet randomTweetFromJson(Map<String, dynamic> json) =>
+    RandomTweet.fromJson(json);
 
 class RandomTweet {
   RandomTweet({

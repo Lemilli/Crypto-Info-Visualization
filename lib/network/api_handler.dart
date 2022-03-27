@@ -60,8 +60,6 @@ class APIHanlder {
         ),
       );
 
-      print(response.data.first);
-
       return randomTweetFromJson(response.data.first);
     } on DioError catch (e) {
       print(e.message);
