@@ -9,6 +9,7 @@ import 'package:infoviz_assign/screens/home_page/widgets/cartesian_graphs_sectio
 import 'package:infoviz_assign/screens/home_page/widgets/homepage_header.dart';
 import 'package:infoviz_assign/screens/home_page/widgets/price_stats_widget.dart';
 import 'package:infoviz_assign/screens/home_page/widgets/pricing_stats_section.dart';
+import 'package:infoviz_assign/screens/home_page/widgets/random_tweet_section.dart';
 import 'package:infoviz_assign/screens/home_page/widgets/semantics_percentage_section.dart';
 import 'package:infoviz_assign/screens/home_page/widgets/semantics_radial_bar.dart';
 
@@ -108,6 +109,8 @@ class LoadedUI extends StatelessWidget {
       const HomepageHeader(),
       const SizedBox(height: 40),
       const CartesianGraphsSection(),
+      const SizedBox(height: 25),
+      const RandomTweetSection(),
       const SizedBox(height: 25),
       const SemanticsPercentageSection(),
       const SizedBox(height: 30),

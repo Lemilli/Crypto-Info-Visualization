@@ -1,3 +1,5 @@
+import 'package:html_character_entities/html_character_entities.dart';
+
 RandomTweet randomTweetFromJson(Map<String, dynamic> json) =>
     RandomTweet.fromJson(json);
 
@@ -24,8 +26,8 @@ class RandomTweet {
       );
 
   factory RandomTweet.fromJson(Map<String, dynamic> json) => RandomTweet(
-        tweet: json["tweet"],
+        tweet: HtmlCharacterEntities.decode(json["tweet"]),
         cleanedTweet: json["cleaned_tweet"],
-        eval: json["eval"] as double,
+        eval: double.parse(json["eval"].toStringAsFixed(2)) * 100,
       );
 }
