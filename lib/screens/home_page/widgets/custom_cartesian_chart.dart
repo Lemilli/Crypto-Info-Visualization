@@ -60,6 +60,7 @@ class CustomCartesianChart extends StatelessWidget {
       series.add(LineSeries<CryptocurrencyModel, dynamic>(
         //enableTooltip: true,
         animationDuration: 0,
+        name: GlobalHelper.cryptoNames[0],
         dataSource: state.bitcoins,
         xValueMapper: (CryptocurrencyModel data, index) => data.datetime,
         yValueMapper: (CryptocurrencyModel data, index) {
@@ -79,6 +80,7 @@ class CustomCartesianChart extends StatelessWidget {
     if (isVisibleETHPrice) {
       series.add(LineSeries<CryptocurrencyModel, dynamic>(
         animationDuration: 0,
+        name: GlobalHelper.cryptoNames[1],
         dataSource: state.ethereums,
         xValueMapper: (CryptocurrencyModel data, index) => data.datetime,
         yValueMapper: (CryptocurrencyModel data, index) {
@@ -98,6 +100,7 @@ class CustomCartesianChart extends StatelessWidget {
     if (isVisibleSOLPrice) {
       series.add(LineSeries<CryptocurrencyModel, dynamic>(
         animationDuration: 0,
+        name: GlobalHelper.cryptoNames[2],
         dataSource: state.solanas,
         xValueMapper: (CryptocurrencyModel data, index) => data.datetime,
         yValueMapper: (CryptocurrencyModel data, index) {
@@ -117,6 +120,13 @@ class CustomCartesianChart extends StatelessWidget {
     return SfCartesianChart(
       primaryXAxis: state.dateTimeAxis,
       primaryYAxis: numericAxis,
+      legend: Legend(
+        isVisible: true,
+        position: LegendPosition.bottom,
+        textStyle: const TextStyle(
+          fontFamily: 'Poppins',
+        ),
+      ),
       trackballBehavior: trackballBehavior,
       zoomPanBehavior: state.zoomPanBehavior,
       series: series,
