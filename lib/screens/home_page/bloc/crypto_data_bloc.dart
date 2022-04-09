@@ -64,16 +64,4 @@ class CryptoDataBloc extends Bloc<CryptoDataEvent, CryptoDataState> {
       ));
     }
   }
-
-  Color getColorFromSemantics(double eval) {
-    if (eval > 5.0) return Colors.green;
-    if (eval < -5.0) return Colors.red;
-    return Colors.grey;
-  }
-
-  String getTextFromSemantics(double eval) {
-    if (eval > 5.0) return 'Positive';
-    if (eval < -5.0) return "Negative";
-    return 'Neutral';
-  }
 }

@@ -24,4 +24,22 @@ class GlobalHelper {
   static String formatDecimalPattern(dynamic number) {
     return _formatter.format(number);
   }
+
+  static Color getColorFromSemantics(double eval) {
+    if (eval > 5.0) return Colors.green;
+    if (eval < -5.0) return Colors.red;
+    return Colors.grey;
+  }
+
+  static String getTextFromSemantics(double eval) {
+    if (eval > 5.0) return 'Positive';
+    if (eval < -5.0) return "Negative";
+    return 'Neutral';
+  }
+
+  static String getImagePathFromName(String cryptoName) {
+    if (cryptoName == cryptoNames[0]) return cryptoImages[0];
+    if (cryptoName == cryptoNames[1]) return cryptoImages[1];
+    return cryptoImages[2];
+  }
 }

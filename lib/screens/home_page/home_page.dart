@@ -3,15 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infoviz_assign/global_widgets/top_navigation_button.dart';
 import 'package:infoviz_assign/screens/about_page/about_page.dart';
 import 'package:infoviz_assign/screens/home_page/bloc/crypto_data_bloc.dart';
-import 'package:infoviz_assign/global_helper.dart';
-import 'package:infoviz_assign/global_widgets/info_tooltip.dart';
 import 'package:infoviz_assign/screens/home_page/widgets/cartesian_graphs_section.dart';
 import 'package:infoviz_assign/screens/home_page/widgets/homepage_header.dart';
-import 'package:infoviz_assign/screens/home_page/widgets/price_stats_widget.dart';
 import 'package:infoviz_assign/screens/home_page/widgets/pricing_stats_section.dart';
 import 'package:infoviz_assign/screens/home_page/widgets/random_tweet_section.dart';
 import 'package:infoviz_assign/screens/home_page/widgets/semantics_percentage_section.dart';
-import 'package:infoviz_assign/screens/home_page/widgets/semantics_radial_bar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
