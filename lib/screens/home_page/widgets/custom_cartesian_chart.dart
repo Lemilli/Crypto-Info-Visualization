@@ -122,6 +122,7 @@ class CustomCartesianChart extends StatelessWidget {
       primaryYAxis: numericAxis,
       legend: Legend(
         isVisible: true,
+        toggleSeriesVisibility: false,
         position: LegendPosition.bottom,
         textStyle: const TextStyle(
           fontFamily: 'Poppins',

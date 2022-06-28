@@ -46,7 +46,8 @@ class CartesianGraphsSection extends StatelessWidget {
           graphType: CartesianGraphType.price,
           title: 'Price',
           icon: Icons.price_change_outlined,
-          tooltipHint: 'Coin price in USD over time\nUpdated every 15 minutes',
+          tooltipHint:
+              'Coin price in USD over time\nUpdated every 15 minutes\nAfter zooming, hold and drag to sides to view more.',
         ),
         const SizedBox(height: 30),
         const CartesianChartWrapper(
@@ -62,7 +63,7 @@ class CartesianGraphsSection extends StatelessWidget {
           title: 'Semantics',
           icon: Icons.speaker_notes_outlined,
           tooltipHint:
-              "Average positivity or negativivity of tweets mentioning a cryptocurrency name, where\n 100: very positive\n 0: neutral\n-100: very negative",
+              "Average positivity or negativivity of tweets mentioning a cryptocurrency name, where\n 100: very positive\n 0: neutral\n-100: very negative\nAfter zooming, hold and drag to sides to view more.",
         ),
       ],
     );

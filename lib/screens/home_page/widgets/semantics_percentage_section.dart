@@ -30,7 +30,8 @@ class SemanticsPercentageSection extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               InfoTooltip(
-                message: DateTime.now()
+                message: 'Updated ' +
+                    DateTime.now()
                         .difference(dataState.latestSemantics.first.datetime)
                         .inMinutes
                         .toString() +
