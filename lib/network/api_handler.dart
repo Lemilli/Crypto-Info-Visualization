@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:infoviz_assign/models/random_tweet.dart';
 
@@ -8,7 +10,6 @@ class APIHanlder {
 
   APIHanlder() {
     BaseOptions options = BaseOptions(
-      baseUrl: 'http://3.250.213.87',
       headers: {'content-Type': 'application/json'},
       connectTimeout: 10000,
       receiveTimeout: 10000,
@@ -20,7 +21,8 @@ class APIHanlder {
   //btc, eth, sol
   Future<List<CryptocurrencyModel>> getCryptoData(String coinShortName) async {
     try {
-      final url = 'http://3.250.213.87/' + coinShortName;
+      final url = 'https://api.allorigins.win/get?url=http://3.250.213.87/' +
+          coinShortName;
 
       final response = await dio.get(
         url,
@@ -32,23 +34,27 @@ class APIHanlder {
         ),
       );
 
+      final responseData = jsonDecode(response.data['contents']);
+
       // reverse list so that fresh data goes in order from fresh to old
-      assert(response.data is List<dynamic>);
-      final List<dynamic> data = response.data.reversed.toList();
+      assert(responseData is List<dynamic>);
+      final List<dynamic> data = responseData.reversed.toList();
 
       return cryptocurrencyModelsFromJson(data);
     } on DioError catch (e) {
       print(e.message);
       return List.empty();
     } catch (e) {
-      print('Exception unknown');
+      print('Exception unknown LIST');
       return List.empty();
     }
   }
 
   Future<RandomTweet?> getRandomTweet(String coinShortName) async {
     try {
-      final url = '/random_tweet_' + coinShortName;
+      final url =
+          'https://api.allorigins.win/get?url=http://3.250.213.87/random_tweet_' +
+              coinShortName;
 
       final response = await dio.get(
         url,
@@ -59,8 +65,9 @@ class APIHanlder {
           },
         ),
       );
+      final responseData = jsonDecode(response.data['contents']);
 
-      return randomTweetFromJson(response.data.first);
+      return randomTweetFromJson(responseData.first);
     } on DioError catch (e) {
       print(e.message);
       return null;
