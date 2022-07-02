@@ -11,6 +11,7 @@ enum DateFilterType {
   hour12,
   day1,
   day7,
+  month1,
 }
 
 class CartesianGraphCubit extends Cubit<CartesianGraphState> {
@@ -81,6 +82,10 @@ class CartesianGraphCubit extends Cubit<CartesianGraphState> {
       case DateFilterType.day7:
         cuttedListLength = 672;
         dropdownText = '7D';
+        break;
+      case DateFilterType.month1:
+        cuttedListLength = 2880;
+        dropdownText = '1M';
         break;
     }
     // Can't cut more than size of a list

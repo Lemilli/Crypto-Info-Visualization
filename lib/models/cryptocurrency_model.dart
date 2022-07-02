@@ -2,7 +2,7 @@ List<CryptocurrencyModel> cryptocurrencyModelsFromJson(List<dynamic> str) {
   List<CryptocurrencyModel> results = List.empty(growable: true);
   for (Map<String, dynamic> element in str) {
     results.add(CryptocurrencyModel.fromJson(element));
-    if (results.length >= 672) break;
+    if (results.length >= 2900) break;
   }
 
   return results;

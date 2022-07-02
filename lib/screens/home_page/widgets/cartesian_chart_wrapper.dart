@@ -167,6 +167,17 @@ class CartesianChartWrapper extends StatelessWidget {
                             enabled: true,
                             child: const Text('7D'),
                           ),
+                          DropdownMenuItem(
+                            value: '1M',
+                            onTap: () {
+                              cartesianGraphCubit.filterByDate(
+                                DateFilterType.month1,
+                                dataState,
+                              );
+                            },
+                            enabled: true,
+                            child: const Text('1M'),
+                          ),
                         ],
                       ),
                       const SizedBox(width: 20),
